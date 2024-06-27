@@ -1,4 +1,13 @@
 {
+  "Absences": "Absences",
+  "Presences": "Presences",
+  "Employee": "Employés",
+  "Expense Note": "Note des frais",
+  "Pay": "Paies",
+  "Employee Data": "Données des employés",
+  "Account Data": "Données de l'entreprise",
+  "Indicators RH": "Rapports Rh",
+  "Dashboard": "Tableau de bord",
   "UI Elements": "ÉLÉMENTS DE L'UI",
   "Forms & Tables": "Formulaires et tableaux",
   "Pages": "Des pages",

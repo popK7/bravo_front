@@ -4,8 +4,6 @@ export default [
     title: 'Email',
     icon: { icon: 'tabler-mail' },
     to: 'apps-email',
-    action: 'read',
-    subject: 'AclDemo',
   },
   {
     title: 'Chat',
