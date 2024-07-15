@@ -1,43 +1,28 @@
 <script setup>
 import AccountSettingsAccount from '@/views/pages/account-settings/AccountSettingsAccount.vue'
 import AccountSettingsBillingAndPlans from '@/views/pages/account-settings/AccountSettingsBillingAndPlans.vue'
-import AccountSettingsConnections from '@/views/pages/account-settings/AccountSettingsConnections.vue'
-import AccountSettingsNotification from '@/views/pages/account-settings/AccountSettingsNotification.vue'
 import AccountSettingsSecurity from '@/views/pages/account-settings/AccountSettingsSecurity.vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const activeTab = ref(route.params.tab)
 
-console.log(activeTab)
-
-
 // tabs
 const tabs = [
   {
-    title: 'Account',
+    title: 'Ownership',
     icon: 'tabler-users',
-    tab: 'account',
+    tab: 'ownership',
   },
   {
-    title: 'Security',
+    title: '0verview',
     icon: 'tabler-lock',
-    tab: 'security',
+    tab: 'overview',
   },
   {
-    title: 'Billing & Plans',
+    title: 'localisation',
     icon: 'tabler-file-text',
-    tab: 'billing-plans',
-  },
-  {
-    title: 'Notifications',
-    icon: 'tabler-bell',
-    tab: 'notification',
-  },
-  {
-    title: 'Connections',
-    icon: 'tabler-link',
-    tab: 'connection',
+    tab: 'localisation',
   },
 ]
 </script>
@@ -52,7 +37,7 @@ const tabs = [
         v-for="item in tabs"
         :key="item.icon"
         :value="item.tab"
-        :to="{ name: 'pages-account-settings-tab', params: { tab: item.tab } }"
+        :to="{ name: 'settings-company-tab', params: { tab: item.tab } }"
       >
         <VIcon
           size="20"
@@ -69,28 +54,18 @@ const tabs = [
       :touch="false"
     >
       <!-- Account -->
-      <VWindowItem value="account">
+      <VWindowItem value="ownership">
         <AccountSettingsAccount />
       </VWindowItem>
 
       <!-- Security -->
-      <VWindowItem value="security">
+      <VWindowItem value="overview">
         <AccountSettingsSecurity />
       </VWindowItem>
 
       <!-- Billing -->
-      <VWindowItem value="billing-plans">
+      <VWindowItem value="localisation">
         <AccountSettingsBillingAndPlans />
-      </VWindowItem>
-
-      <!-- Notification -->
-      <VWindowItem value="notification">
-        <AccountSettingsNotification />
-      </VWindowItem>
-
-      <!-- Connections -->
-      <VWindowItem value="connection">
-        <AccountSettingsConnections />
       </VWindowItem>
     </VWindow>
   </div>

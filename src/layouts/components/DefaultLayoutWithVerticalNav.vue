@@ -6,6 +6,7 @@ import { useThemeConfig } from '@core/composable/useThemeConfig'
 import Footer from '@/layouts/components/Footer.vue'
 import NavBarI18n from '@/layouts/components/NavBarI18n.vue'
 import NavBarNotifications from '@/layouts/components/NavBarNotifications.vue'
+import NavBarRequest from '@/layouts/components/NavBarRequest.vue'
 import NavBarSetting from '@/layouts/components/NavBarSetting.vue'
 import NavSearchBar from '@/layouts/components/NavSearchBar.vue'
 import NavbarShortcuts from '@/layouts/components/NavbarShortcuts.vue'
@@ -40,8 +41,9 @@ const { width: windowWidth } = useWindowSize()
 
         <VSpacer />
 
-        <NavBarSetting class="me-1" />
+        <NavBarRequest class="me-1" />
         <NavBarI18n class="me-1" />
+        <NavBarSetting class="me-1" />
         <NavbarThemeSwitcher class="me-1" />
         <NavbarShortcuts class="me-1" />
         <NavBarNotifications class="me-2" />
