@@ -1,5 +1,4 @@
 <script setup>
-import { VForm } from 'vuetify/components/VForm'
 import { useAppAbility } from '@/plugins/casl/useAppAbility'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import axios from '@axios'
@@ -13,9 +12,10 @@ import authV2MaskLight from '@images/pages/misc-mask-light.png'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
 import {
-  emailValidator,
-  requiredValidator,
+emailValidator,
+requiredValidator,
 } from '@validators'
+import { VForm } from 'vuetify/components/VForm'
 
 const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
 const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
@@ -23,6 +23,7 @@ const isPasswordVisible = ref(false)
 const route = useRoute()
 const router = useRouter()
 const ability = useAppAbility()
+const loader = ref(false)
 
 const errors = ref({
   email: undefined,
@@ -40,7 +41,6 @@ const login = () => {
     password: password.value,
   }).then(r => {
     const { accessToken, userData, userAbilities } = r.data
-
     localStorage.setItem('userAbilities', JSON.stringify(userAbilities))
     ability.update(userAbilities)
     localStorage.setItem('userData', JSON.stringify(userData))
@@ -53,10 +53,13 @@ const login = () => {
 
     errors.value = formErrors
     console.error(e.response.data)
+  }).finally(() =>{
+    loader.value = true
   })
 }
 
 const onSubmit = () => {
+  loader.value = true
   refVForm.value?.validate().then(({ valid: isValid }) => {
     if (isValid)
       login()
@@ -173,6 +176,13 @@ const onSubmit = () => {
                   type="submit"
                 >
                   Login
+                  <VProgressCircular
+                    :size="30"
+                    width="3"
+                    color="primary"
+                    indeterminate
+                    v-if="loader"
+                  />
                 </VBtn>
               </VCol>
 
