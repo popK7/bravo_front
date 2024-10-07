@@ -2,10 +2,10 @@
 export default [
   {
     title: 'Notes de frais',
-    icon: { icon: 'tabler-file-dollar' },
+    icon: { icon: 'tabler-wallet' },
     children: [
-      { title: 'Les notes de frais', to: 'apps-invoice-list' },
-      { title: 'Mes notes de frais', to: { name: 'apps-invoice-preview-id', params: { id: '5036' } } },
+      { title: 'Les notes de frais', to: 'expenses-list' },
+      { title: 'Mes notes de frais', to: { name: 'expenses-my', params: { id: '5036' } } },
     ],
   },
 

@@ -1,8 +1,8 @@
 export default [
   {
     title: 'Employés',
-    icon: { icon: 'tabler-mail' },
-    to: 'apps-email',
+    icon: { icon: 'tabler-users' },
+    to: 'employees-list',
   },
 
 ]
