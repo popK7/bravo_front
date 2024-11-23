@@ -1,13 +1,11 @@
 <script setup>
-import {
-    avatarText,
-    kFormatter,
-} from '@core/utils/formatters'
 import { ref, watch } from 'vue'
 
 import MyPay from '@/pages/components/simple-list-pagination.vue';
-import AddNewContractDrawer from '@/views/contracts/AddNewContractDrawer.vue'
-const isAddNewContractDrawerVisible = ref(false);
+import drawer from '@/views/contracts/Drawer.vue'
+import Files from '@/pages/components/bravo/fileList.vue'; 
+
+const isDrawerVisible = ref(false);
 
 const props = defineProps({
     userData: {
@@ -16,27 +14,13 @@ const props = defineProps({
     },
     loader: {
         type: Boolean,
-        default: true,
-        required: true,
+        default: false,
+        required: false,
     },
 })
-let isLoading = ref(props.loader);
-watch(() => props.loader, (loader, prevLoader) => {
-    console.log(loader);
-})
-
-const standardPlan = {
-    plan: 'Standard',
-    price: 99,
-    benefits: [
-        '10 Users',
-        'Up to 10GB storage',
-        'Basic Support',
-    ],
-};
 const addContrat = function() {
-  isAddNewContractDrawerVisible.value = true
-}
+  isDrawerVisible.value = true
+};
 </script>
 
 <template>
@@ -48,7 +32,11 @@ const addContrat = function() {
                 <div class="d-flex justify-content-between salaire_header mb-5">
                     <h4>Contrats</h4>
                     <VBtn size="small" @click="addContrat">
-                        <VIcon icon="tabler-plus" /> Ajouter
+                        Ajouter
+                        <VIcon
+                          end
+                          icon="tabler-checkbox"
+                        />
                     </VBtn>
                 </div>
             </template>
@@ -58,14 +46,15 @@ const addContrat = function() {
     <VCol cols="12">
         <VCard>
             <VCardText>
-                <MyPay></MyPay>
+                <files />
             </VCardText>
         </VCard>
     </VCol>
     <!-- !SECTION -->
     <VCol cols="12">
-      <AddNewContractDrawer
-      v-model:isDrawerOpen="isAddNewContractDrawerVisible"
+      <drawer
+      tag="add_contract"
+      v-model:isDrawerOpen="isDrawerVisible"
       @user-data="addNewUser"
     />
     </VCol>

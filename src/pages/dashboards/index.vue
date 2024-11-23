@@ -4,6 +4,7 @@ const tabItemContent = 'Candy canes donut chupa chups candy canes lem canes marz
 const tabNotificationContent = "Vous n'avez rien à valider";
 const responsable = ref("Vous n'avez pas de responsable");
 const equipe = ref("Vous n'avez pas de responsable");
+
 import ProgressList from '@/pages/components/progress-list.vue';
 import demandNotification from '@/views/dashboard/demands.vue';
 import notifications from '@/views/dashboard/notifications.vue';
@@ -199,6 +200,13 @@ const count_notifications = function() {
     </VCol>
 </VRow>
 </template>
+
+<route lang="yaml">
+  meta:
+    action: read
+    subject: AclDemo
+  </route>
+  
 <style scoped>
 .space-between{
   justify-content: space-between;

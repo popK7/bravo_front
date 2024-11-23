@@ -3,63 +3,123 @@ import {
     avatarText,
     kFormatter,
 } from '@core/utils/formatters'
-import { ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 
-import Salary from '@/pages/components/simple-list-5.vue';
+import SalaryList from '@/pages/components/simple-list-5.vue';
 import additionalRemunerationList from '@/pages/components/additionalRemunerationList.vue';
-import addSalaryForm from './components/AddSalaryForm.vue';
-import additionalRemunerationForm from './components/AdditionalRemunerationForm.vue';
 
+import drawer from './drawer.vue'
+
+const formData = ref(null)
+const isDrawerOpen = ref(false);
 const isDialogVisible = ref(false);
 const isAdditionalVisible = ref(false);
+
+const activeTab = ref('salary')
+
 const props = defineProps({
     userData: {
         type: Object,
         required: true,
     },
-    loader: {
-        type: Boolean,
-        default: true,
-        required: true,
+})
+
+const emit = defineEmits(['onHandleAction']);
+const currentTab = ref('window1')
+
+const salaries = [{
+        id: 1,
+        salary: 1200,
+        currency: {name: '$', value: 1},
+        frequency: {name: 'mois', value: 1},
+        start_at: '28.09.2024',
+        end_at: null,
+        status: 'En vigueur',
+        lastVisited: '13 minutes ago',
     },
-})
-let isLoading = ref(props.loader);
-const showDialog = ref(false);
-watch(() => props.loader, (loader, prevLoader) => {
-    console.log(loader);
-})
+    {
+        id: 3,
+        salary: 3200,
+        currency: {name: 'dhs', value: 3},
+        frequency: {name: 'mois', value: 1},
+        start_at: '28.09.2024',
+        end_at: '28.09.2024',
+        status: 'Archive',
+        lastVisited: '13 minutes ago',
+    }
+];
 
-const standardPlan = {
-    plan: 'Standard',
-    price: 99,
-    benefits: [
-        '10 Users',
-        'Up to 10GB storage',
-        'Basic Support',
-    ],
-}
+const additionals = [{
+        id: 1,
+        start_at: '28.09.2024',
+        end_at: null,
+        type: {name: "Avantage en nature", value: 1},
+        currency: {name: '$', value: 1},
+        frequency:{name: 'mois', value: 1},
+        value: 40,
+        status: {name: 'En vigueur', value: 1},
+        description: "Une belle description de la remunération"
+    },
+    {
+        id: 2,
+        start_at: '28.09.2024',
+        end_at: '28.09.2024',
+        type: {name: "Complement salaire", value: 1},
+        currency: {name: '$', value: 1},
+        frequency: {name: 'mois', value: 1},
+        value: 400,
+        status: {name: 'Archive', value: 2},
+        description: "Une belle description de la remunération"
+    }
+]
 
-let addSalary = function () {
-    isDialogVisible.value = true
+
+const addSalary = function () {
+  activeTab.value = 'salary'
+  isDrawerOpen.value = true
 };
-let addAdditionalSalary = function () {
-    isAdditionalVisible.value = true
+const addAdditionalSalary = function () {
+  activeTab.value = 'additional'
+  isDrawerOpen.value = true
 };
-setTimeout(() => {
-    showDialog.value = true
-    console.log(showDialog.value);
-}, 2000);
-showDialog.value = true
+
+const create = function(data){
+  console.log(data);
+  emit('onHandleAction', data)
+  isDrawerOpen.value = false;
+};
+
+const handleSalarySelected = function(data) {
+  activeTab.value = "update_salary";
+  formData.value = data;
+  isDrawerOpen.value = true;
+};
+
+const handleAditionalSelected = function(data) {
+  activeTab.value = "update_additional";
+  formData.value = data;
+  isDrawerOpen.value = true;
+};
+
 </script>
 
 <template>
 <VRow>
     <!-- SECTION User Details -->
     <VCol cols="12">
+      <VTabs
+        v-model="currentTab"
+        class="v-tabs-pill mb-3"
+      >
+        <VTab>Salaires</VTab>
+        <VTab>Additionnelles</VTab>
+      </VTabs>
+
+      <VWindow v-model="currentTab">
+        <VWindowItem
+          key="window1"
+        >
         <VCard>
-            <template #title>
-                <h3>Rémunerations</h3>
-            </template>
             <VCardText>
                 <div class="d-flex justify-content-between salaire_header mb-5">
                     <h3 class="#">Salaires</h3>
@@ -67,18 +127,28 @@ showDialog.value = true
                         Ajouter
                     </VBtn>
                 </div>
-                <Salary></Salary>
+                <salary-list :items="salaries" @on-selected="handleSalarySelected" :key="salaries.length"/>
             </VCardText>
-            <VCardText>
+        </VCard>
+        </VWindowItem>
+
+        <VWindowItem
+          key="window2"
+        >
+        <VCard>
+          <VCardText>
                 <div class="d-flex justify-content-between salaire_header mb-5">
                     <h3 class="#">Rémunération additionnelle</h3>
                     <VBtn size="small" @click="addAdditionalSalary">
                         Ajouter
                     </VBtn>
                 </div>
-                <additional-remuneration-list></additional-remuneration-list>
+                <additional-remuneration-list :items="additionals" @on-selected="handleAditionalSelected" :key="additionals.length"/>
             </VCardText>
         </VCard>
+        </VWindowItem>
+
+      </VWindow>
     </VCol>
     <!-- !SECTION -->
 
@@ -111,8 +181,10 @@ showDialog.value = true
             </VCardText>
 
         </VCard>
-    </VDialog>
+    </VDialog> 
+    <drawer v-model:isDrawerOpen="isDrawerOpen" :tab="activeTab" :form-data="formData" @on-save="create" :key="Math.random()"/>
 </VRow>
+
 </template>
 
 <style lang="scss" scoped>

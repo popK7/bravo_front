@@ -5,7 +5,7 @@ import {
 } from '@core/utils/formatters'
 import { ref, watch } from 'vue'
 
-import MyPay from '@/pages/components/simple-list-pagination.vue';
+import MyPay from '@/pages/components/bravo/expansion.vue';
 
 const props = defineProps({
   userData: {

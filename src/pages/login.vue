@@ -64,7 +64,7 @@ const onSubmit = () => {
     if (isValid)
       login()
   })
-}
+};
 </script>
 
 <template>
@@ -109,13 +109,13 @@ const onSubmit = () => {
           />
 
           <h5 class="text-h5 mb-1">
-            Welcome to <span class="text-capitalize"> {{ themeConfig.app.title }} </span>! 👋🏻
+            Bienvenue chez <span class="text-capitalize"> {{ themeConfig.app.title }} </span>! 👋🏻
           </h5>
           <p class="mb-0">
-            Please sign-in to your account and start the adventure
+            Veuillez vous connecter à votre compte
           </p>
         </VCardText>
-        <VCardText>
+        <VCardText v-if="false">
           <VAlert
             color="primary"
             variant="tonal"
@@ -161,13 +161,13 @@ const onSubmit = () => {
                 <div class="d-flex align-center flex-wrap justify-space-between mt-2 mb-4">
                   <VCheckbox
                     v-model="rememberMe"
-                    label="Remember me"
+                    label="Se souvenir de moi"
                   />
                   <RouterLink
                     class="text-primary ms-2 mb-1"
                     :to="{ name: 'forgot-password' }"
                   >
-                    Forgot Password?
+                    Mot de passe oublié?
                   </RouterLink>
                 </div>
 
@@ -175,14 +175,11 @@ const onSubmit = () => {
                   block
                   type="submit"
                 >
-                  Login
-                  <VProgressCircular
-                    :size="30"
-                    width="3"
-                    color="primary"
-                    indeterminate
-                    v-if="loader"
-                  />
+                  Se connecter
+
+                  <VProgressCircular :size="20" width="3" color="" indeterminate class="ml-2" v-if="loader" />
+
+
                 </VBtn>
               </VCol>
 
@@ -191,12 +188,12 @@ const onSubmit = () => {
                 cols="12"
                 class="text-center"
               >
-                <span>New on our platform?</span>
+                <span>Nouveau sur votre plateforme ?</span>
                 <RouterLink
                   class="text-primary ms-2"
                   :to="{ name: 'register' }"
                 >
-                  Create an account
+                  Créer un compte
                 </RouterLink>
               </VCol>
               <VCol
@@ -204,7 +201,7 @@ const onSubmit = () => {
                 class="d-flex align-center"
               >
                 <VDivider />
-                <span class="mx-4">or</span>
+                <span class="mx-4">ou</span>
                 <VDivider />
               </VCol>
 

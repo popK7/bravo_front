@@ -12,6 +12,8 @@ import axios from '@axios'
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
 import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
 import { themeConfig } from '@themeConfig'
+import request from '@/helpers/request.js'
+
 import {
   alphaDashValidator,
   emailValidator,
@@ -19,9 +21,16 @@ import {
 } from '@validators'
 
 const refVForm = ref()
-const username = ref('johnDoe')
-const email = ref('john@example.com')
-const password = ref('john@VUEXY#123')
+const first_name = ref(null)
+const last_name = ref(null)
+
+const email = ref(null)
+const phone = ref(null)
+
+const password = ref(null)
+const account = ref(null)
+
+
 const privacyPolicies = ref(true)
 
 // Router
@@ -59,19 +68,23 @@ const register = () => {
 
     errors.value = formErrors
     console.error(e.response.data)
+  }).finally(() => {
+    loader.value = false;
   })
 }
 
 const imageVariant = useGenerateImageVariant(authV2RegisterIllustrationLight, authV2RegisterIllustrationDark, authV2RegisterIllustrationBorderedLight, authV2RegisterIllustrationBorderedDark, true)
 const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
 const isPasswordVisible = ref(false)
+const loader = ref(false)
 
 const onSubmit = () => {
   refVForm.value?.validate().then(({ valid: isValid }) => {
+  loader.value = true;
     if (isValid)
       register()
   })
-}
+};
 </script>
 
 <template>
@@ -115,10 +128,10 @@ const onSubmit = () => {
             class="mb-6"
           />
           <h5 class="text-h5 mb-1">
-            Adventure starts here 🚀
+            {{ themeConfig.app.title }} 🚀
           </h5>
-          <p class="mb-0">
-            Make your app management easy and fun!
+          <p class="mb-0 text-primary">
+            Rendez la gestion RH simple et amusante !
           </p>
         </VCardText>
 
@@ -128,14 +141,41 @@ const onSubmit = () => {
             @submit.prevent="onSubmit"
           >
             <VRow>
-              <!-- Username -->
+              <!-- compagny -->
               <VCol cols="12">
                 <AppTextField
-                  v-model="username"
+                  v-model="account"
                   autofocus
-                  :rules="[requiredValidator, alphaDashValidator]"
-                  label="Username"
+                  placeholder="Votre campanie"
+                  :rules="[requiredValidator]"
+                  label="Companie"
                 />
+              </VCol>
+
+
+              <!-- Username -->
+              <VCol cols="12">
+                <VRow>
+                  <VCol cols="6">
+                    <AppTextField
+                      v-model="first_name"
+                      autofocus
+                      :rules="[requiredValidator, alphaDashValidator]"
+                      label="Prénom"
+                      placeholder="Votre prénom"
+
+                    />
+                  </VCol>
+                  <VCol cols="6">
+                    <AppTextField
+                      v-model="last_name"
+                      autofocus
+                      :rules="[requiredValidator, alphaDashValidator]"
+                      label="Nom"
+                      placeholder="Votre nom"
+                    />
+                  </VCol>
+                </VRow>
               </VCol>
 
               <!-- email -->
@@ -145,6 +185,20 @@ const onSubmit = () => {
                   :rules="[requiredValidator, emailValidator]"
                   label="Email"
                   type="email"
+                  placeholder="Email"
+
+                />
+              </VCol>
+
+               <!-- phone -->
+               <VCol cols="12">
+                <AppTextField
+                  v-model="phone"
+                  :rules="[requiredValidator, emailValidator]"
+                  label="Téléphone"
+                  type="phone"
+                  placeholder="Votre Téléphone"
+
                 />
               </VCol>
 
@@ -157,6 +211,7 @@ const onSubmit = () => {
                   :type="isPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'"
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                  placeholder="Password"
                 />
 
                 <div class="d-flex align-center mt-2 mb-4">
@@ -168,11 +223,11 @@ const onSubmit = () => {
                   >
                     <template #label>
                       <span class="me-1">
-                        I agree to
+                        J'accèpte
                         <a
                           href="javascript:void(0)"
                           class="text-primary"
-                        >privacy policy & terms</a>
+                        >les termes et conditions</a>
                       </span>
                     </template>
                   </VCheckbox>
@@ -182,7 +237,9 @@ const onSubmit = () => {
                   block
                   type="submit"
                 >
-                  Sign up
+                  Enregistrer
+                  <VProgressCircular :size="20" width="3" color="" indeterminate class="ml-2" v-show="loader" />
+
                 </VBtn>
               </VCol>
 
@@ -191,12 +248,12 @@ const onSubmit = () => {
                 cols="12"
                 class="text-center text-base"
               >
-                <span>Already have an account?</span>
+                <span>Vous avez déjà un compte ?</span>
                 <RouterLink
                   class="text-primary ms-2"
                   :to="{ name: 'login' }"
                 >
-                  Sign in instead
+                  Se connecter
                 </RouterLink>
               </VCol>
 
@@ -205,7 +262,7 @@ const onSubmit = () => {
                 class="d-flex align-center"
               >
                 <VDivider />
-                <span class="mx-4">or</span>
+                <span class="mx-4">ou</span>
                 <VDivider />
               </VCol>
 

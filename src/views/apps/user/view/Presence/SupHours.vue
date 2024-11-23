@@ -1,11 +1,9 @@
 <script setup>
-import {
-  avatarText,
-  kFormatter,
-} from '@core/utils/formatters'
 import { ref, watch } from 'vue'
-import SupHoursTable from './SupHoursTable.vue'
+import SupHoursTable from '@/views/presences/tables/SupHours.vue'
+import drawer from '@/views/presences/drawer.vue'
 
+const drawerOpen = ref(false);
 
 const props = defineProps({
   userData: {
@@ -15,13 +13,10 @@ const props = defineProps({
   loader: {
     type: Boolean,
     default: true,
-    required: true,
+    required: false,
   },
 })
-let isLoading = ref(props.loader);
-watch(() => props.loader, (loader, prevLoader) => { 
-  console.log(loader);
-})
+
 
 const standardPlan = {
   plan: 'Standard',
@@ -36,49 +31,13 @@ const standardPlan = {
 const isUserInfoEditDialogVisible = ref(false)
 const isUpgradePlanDialogVisible = ref(false)
 
-const resolveUserStatusVariant = stat => {
-  if (stat === 'pending')
-    return 'warning'
-  if (stat === 'active')
-    return 'success'
-  if (stat === 'inactive')
-    return 'secondary'
-  
-  return 'primary'
+const drawerClose = function() {
+  drawerOpen.value = false;
 }
 
-const resolveUserRoleVariant = role => {
-  if (role === 'subscriber')
-    return {
-      color: 'warning',
-      icon: 'tabler-user',
-    }
-  if (role === 'author')
-    return {
-      color: 'success',
-      icon: 'tabler-circle-check',
-    }
-  if (role === 'maintainer')
-    return {
-      color: 'primary',
-      icon: 'tabler-chart-pie-2',
-    }
-  if (role === 'editor')
-    return {
-      color: 'info',
-      icon: 'tabler-pencil',
-    }
-  if (role === 'admin')
-    return {
-      color: 'secondary',
-      icon: 'tabler-server-2',
-    }
-  
-  return {
-    color: 'primary',
-    icon: 'tabler-user',
-  }
-}
+const addSupHour = function() {
+  drawerOpen.value = true
+};
 
 
 </script>
@@ -91,7 +50,7 @@ const resolveUserRoleVariant = role => {
         <template #title>
           <div class="d-flex justify-content-between">
             <h4>Heures supplementaires</h4>
-            <VBtn size="small" @click="addProduct">
+            <VBtn size="small" @click="addSupHour">
               Ajouter
             </VBtn>
           </div>
@@ -101,9 +60,11 @@ const resolveUserRoleVariant = role => {
       </VCard>
     </VCol>
     <VCol cols="12">
-      <SupHoursTable></SupHoursTable>
+      <SupHoursTable />
     </VCol>
     <!-- !SECTION -->
+    <drawer tab="sup_hours" :form="form" :isDrawerOpen="drawerOpen" @update:isDrawerOpen="drawerClose" />
+
   </VRow>
   
 </template>

@@ -22,7 +22,7 @@ const props = defineProps({
   loader: {
     type: Boolean,
     default: true,
-    required: true,
+    required: false,
   },
 })
 let isLoading = ref(props.loader);
@@ -51,9 +51,6 @@ const standardPlan = {
     <!-- SECTION User Details -->
     <VCol cols="12">
       <VCard>
-        <template #title>
-          <h4>Informations</h4>
-        </template>
         <VCardText class="#">
           <!-- 👉 Personnal data -->
           <Information @onSave="save"/>

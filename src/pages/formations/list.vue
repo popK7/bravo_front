@@ -1,14 +1,10 @@
 <script setup>
-import {
-  avatarText,
-  kFormatter,
-} from '@core/utils/formatters'
 import { ref, watch } from 'vue'
 
-import FormationList from './components/FormationList.vue';
-import AddNewFormationDrawer from '@/views/formations/AddNewFormationDrawer.vue'
+import FormationList from '@/views/formations/tables/Formations.vue';
+import Drawer from '@/views/formations/Drawer.vue' 
 
-let isAddNewExpenseDrawerVisible = ref(false)
+let isDrawerVisible = ref(false)
 
 const props = defineProps({
   userData: {
@@ -17,29 +13,15 @@ const props = defineProps({
   },
   loader: {
     type: Boolean,
-    default: true,
-    required: true,
+    default: false,
+    required: false,
   },
 })
-let isLoading = ref(props.loader);
-watch(() => props.loader, (loader, prevLoader) => { 
-  console.log(loader);
-})
 
-const standardPlan = {
-  plan: 'Standard',
-  price: 99,
-  benefits: [
-    '10 Users',
-    'Up to 10GB storage',
-    'Basic Support',
-  ],
-}
-
-const addProduct = function() {
-  console.log('successs');
-  isAddNewExpenseDrawerVisible.value = true
+const addFormation = function() {
+  isDrawerVisible.value = true
 };  
+
 </script>
 
 <template>
@@ -50,8 +32,12 @@ const addProduct = function() {
             <VCardText>
                 <div class="d-flex justify-content-between salaire_header mb-5">
                     <h3 class="#">Formations</h3>
-                    <VBtn size="small" @click="addProduct">
+                    <VBtn size="small" @click="addFormation">
                         Ajouter
+                        <VIcon
+                          end
+                          icon="tabler-checkbox"
+                        />
                     </VBtn>
                 </div>
             </VCardText>
@@ -59,20 +45,12 @@ const addProduct = function() {
     </VCol>
     <VCol cols="12">
       <formation-list v-if="props.userData && !props.loader"></formation-list>
-      <VCard v-else class="is_loading_spinner">
-        <VProgressCircular
-          :size="30"
-          width="3"
-          color="primary"
-          indeterminate
-          class="progress_class"
-        />
-      </VCard>
     </VCol>
     <!-- !SECTION -->
     <VCol cols="12">
-      <AddNewFormationDrawer
-      v-model:isDrawerOpen="isAddNewExpenseDrawerVisible"
+      <Drawer
+      tab="add_demand"
+      v-model:isDrawerOpen="isDrawerVisible"
       @user-data="addNewUser"
     />
     </VCol>

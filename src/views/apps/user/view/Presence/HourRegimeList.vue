@@ -43,7 +43,7 @@ const resolveStatusColor = {
   'Away': 'warning',
   'Offline': 'secondary',
   'In Meeting': 'error',
-}
+};
 </script>
 
 <template>

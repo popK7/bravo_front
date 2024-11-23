@@ -21,8 +21,8 @@ const props = defineProps({
   },
   loader: {
     type: Boolean,
-    default: true,
-    required: true,
+    default: false,
+    required: false,
   },
 })
 let isLoading = ref(props.loader);

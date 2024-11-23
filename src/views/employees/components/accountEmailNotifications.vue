@@ -11,7 +11,7 @@ const switchOnLoading = ref('on');
         <p>Absences</p>
     </VCol>
     <VCol cols="9">
-        <VSwitch loading="warning" />
+        <VSwitch /> 
         <p class="mt-3">Notifications concernant les demandes d'absence. Si elles sont désactivées, elles sont uniquement notifiées dans kiwiHR.</p>
     </VCol>
     <!-- Paie -->
@@ -19,7 +19,7 @@ const switchOnLoading = ref('on');
         <p>Paie</p>
     </VCol>
     <VCol cols="9">
-        <VSwitch loading="warning" />
+        <VSwitch />
         <p class="mt-3">Notifications concernant les données de rémunération et les cycles de paie si vous êtes approbateur. Si elles sont désactivées, vous les recevrez uniquement dans kiwiHR.</p>
     </VCol>
     <!-- Notes de frais -->
@@ -27,7 +27,7 @@ const switchOnLoading = ref('on');
         <p>Notes de frais</p>
     </VCol>
     <VCol cols="9">
-        <VSwitch loading="warning" />
+        <VSwitch />
         <p class="mt-3"> Notifications concernant les demandes de notes de frais. Si elles sont désactivées, elles sont uniquement notifiées dans kiwiHR.</p>
     </VCol>
     <!-- Résumé hebdomadaire -->
@@ -35,7 +35,7 @@ const switchOnLoading = ref('on');
         <p class="mt-3">Résumé hebdomadaire</p>
     </VCol>
     <VCol cols="9">
-        <VSwitch loading="warning" />
+        <VSwitch />
         <p class="mt-3">Notifications envoyées tous les lundis concernant les absences, les évènements d'employés et les jours fériés. Si elles sont désactivées, vous ne les recevrez pas.</p>
     </VCol>
 </VRow>

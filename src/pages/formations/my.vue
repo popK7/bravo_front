@@ -6,9 +6,9 @@ import {
 import { ref, watch } from 'vue'
 
 import ProductList from './components/FormationList.vue';
-import AddNewProductDrawer from '@/views/products/AddNewProductDrawer.vue'
+import drawer from '@/views/products/drawer.vue'
 
-let isAddNewProductDrawerVisible = ref(false)
+let isdrawerVisible = ref(false)
 
 const props = defineProps({
   userData: {
@@ -38,7 +38,7 @@ const standardPlan = {
 
 const addProduct = function() {
   console.log('successs');
-  isAddNewProductDrawerVisible.value = true
+  isdrawerVisible.value = true
 };  
 </script>
 
@@ -52,6 +52,11 @@ const addProduct = function() {
                     <h3 class="#">Inventaires</h3>
                     <VBtn size="small" @click="addProduct">
                         Ajouter
+                        
+                        <VIcon
+                          end
+                          icon="tabler-checkbox"
+                        />
                     </VBtn>
                 </div>
             </VCardText>
@@ -71,8 +76,8 @@ const addProduct = function() {
     </VCol>
     <!-- !SECTION -->
     <VCol cols="12">
-      <AddNewProductDrawer
-      v-model:isDrawerOpen="isAddNewProductDrawerVisible"
+      <drawer
+      v-model:isDrawerOpen="isdrawerVisible"
       @user-data="addNewUser"
     />
     </VCol>

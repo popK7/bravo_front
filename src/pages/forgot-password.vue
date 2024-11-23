@@ -53,10 +53,10 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
             class="mb-6"
           />
           <h5 class="text-h5 mb-1">
-            Forgot Password? 🔒
+            Mot de passe oublié? 🔒
           </h5>
           <p class="mb-0">
-            Enter your email and we'll send you instructions to reset your password
+            Entrez votre email et nous vous enverrons des instructions pour réinitialiser votre mot de passe
           </p>
         </VCardText>
 
@@ -70,6 +70,7 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
                   autofocus
                   label="Email"
                   type="email"
+                  placeholder="Entrez votre mail"
                 />
               </VCol>
 
@@ -79,7 +80,7 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
                   block
                   type="submit"
                 >
-                  Send Reset Link
+                  Evoyer le lien
                 </VBtn>
               </VCol>
 
@@ -93,7 +94,7 @@ const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
                     icon="tabler-chevron-left"
                     class="flip-in-rtl"
                   />
-                  <span>Back to login</span>
+                  <span>Retour</span>
                 </RouterLink>
               </VCol>
             </VRow>

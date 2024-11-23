@@ -112,59 +112,6 @@ import pumaShoes from '@images/pages/puma-shoes.jpeg'
         </VTimelineItem>
         <!-- !SECTION -->
 
-        <!-- SECTION Timeline Item: Puma Shoes -->
-        <VTimelineItem
-          size="x-small"
-          dot-color="info"
-        >
-          <div class="d-flex align-start flex-sm-row flex-column mb-3 gap-y-2">
-            <VImg
-              height="62"
-              width="62"
-              :src="pumaShoes"
-              class="rounded me-4"
-            />
-
-            <div>
-              <!-- Header -->
-              <div class="d-flex justify-space-between align-center flex-wrap">
-                <span class="app-timeline-title">
-                  Sold Puma POPX Blue Color
-                </span>
-                <span class="app-timeline-meta">January, 10</span>
-
-                <span class="app-timeline-meta">January, 10</span>
-              </div>
-
-              <span class="app-timeline-text">PUMA presents the latest shoes from its collection. Light &amp; comfortable
-                made with highly durable material.</span>
-            </div>
-          </div>
-
-          <!-- 👉 Timeline Item: Meta Content -->
-          <div class="d-flex justify-space-between flex-column flex-sm-row gap-3">
-            <div class="text-sm-center">
-              <h6 class="text-sm font-weight-medium">
-                Customer
-              </h6>
-              <span class="text-xs">Micheal Scott</span>
-            </div>
-            <div class="text-sm-center">
-              <h6 class="text-sm font-weight-medium">
-                Price
-              </h6>
-              <span class="text-xs">$375.00</span>
-            </div>
-            <div class="text-sm-center">
-              <h6 class="text-sm font-weight-medium">
-                Quantity
-              </h6>
-              <span class="text-xs">1</span>
-            </div>
-          </div>
-        </VTimelineItem>
-        <!-- !SECTION -->
-
         <!-- SECTION Design Review -->
         <VTimelineItem
           size="x-small"

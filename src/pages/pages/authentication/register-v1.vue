@@ -49,7 +49,7 @@ const isPasswordVisible = ref(false)
 
         <VCardText class="pt-2">
           <h5 class="text-h5 mb-1">
-            Adventure starts here 🚀
+            Adventure starts here 🚀 
           </h5>
           <p class="mb-0">
             Make your app management easy and fun!

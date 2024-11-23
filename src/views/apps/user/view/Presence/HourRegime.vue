@@ -15,7 +15,7 @@ const props = defineProps({
   loader: {
     type: Boolean,
     default: true,
-    required: true,
+    required: false,
   },
 })
 let isLoading = ref(props.loader);
@@ -78,7 +78,7 @@ const resolveUserRoleVariant = role => {
     color: 'primary',
     icon: 'tabler-user',
   }
-}
+};
 
 
 </script>
@@ -91,6 +91,10 @@ const resolveUserRoleVariant = role => {
         <template #title>
           <h4 class="hour_regime">Rgime Horaire</h4>
         </template>
+      </VCard>
+    </VCol>
+    <VCol cols="12">
+      <VCard>
         <VCardText>
           <HourRegimeList class="hour_regime"></HourRegimeList>
         </VCardText>
@@ -102,7 +106,7 @@ const resolveUserRoleVariant = role => {
   
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .card-list {
   --v-card-list-gap: 0.75rem;
 }
@@ -111,12 +115,4 @@ const resolveUserRoleVariant = role => {
   text-transform: capitalize !important;
 }
 
-.is_loading_spinner{
-  padding: 50px;
-  display: flex;
-  justify-content: center;
-}
-.hour_regime{
-  margin: auto 15%;
-}
 </style>

@@ -38,7 +38,7 @@ const userProfileList = [
   {
     type: 'navItem',
     icon: 'tabler-settings',
-    title: 'Settings',
+    title: 'Cofigurations',
     to: {
       name: 'pages-account-settings-tab',
       params: { tab: 'account' },
@@ -47,7 +47,7 @@ const userProfileList = [
   {
     type: 'navItem',
     icon: 'tabler-credit-card',
-    title: 'Billing',
+    title: 'Factures',
     to: {
       name: 'pages-account-settings-tab',
       params: { tab: 'billing-plans' },
@@ -57,26 +57,12 @@ const userProfileList = [
       content: '3',
     },
   },
-  { type: 'divider' },
-  {
-    type: 'navItem',
-    icon: 'tabler-lifebuoy',
-    title: 'Help',
-    to: { name: 'pages-help-center' },
-  },
   {
     type: 'navItem',
     icon: 'tabler-currency-dollar',
-    title: 'Pricing',
+    title: 'Plans',
     to: { name: 'pages-pricing' },
   },
-  {
-    type: 'navItem',
-    icon: 'tabler-help',
-    title: 'FAQ',
-    to: { name: 'pages-faq' },
-  },
-  { type: 'divider' },
   {
     type: 'navItem',
     icon: 'tabler-logout',

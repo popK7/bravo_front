@@ -3,9 +3,11 @@ import {
     avatarText,
     kFormatter,
 } from '@core/utils/formatters'
-import { ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 
 import MyPaies from '@/pages/components/simple-list-pagination.vue';
+
+const router = useRouter();
 
 const props = defineProps({
     userData: {
@@ -14,14 +16,14 @@ const props = defineProps({
     },
     loader: {
         type: Boolean,
-        default: true,
-        required: true,
+        default: false,
+        required: false,
     },
 })
-let isLoading = ref(props.loader);
-watch(() => props.loader, (loader, prevLoader) => {
-    console.log(loader);
-})
+
+const redirectToPayPage = function(item) {
+  router.push({name: 'apps-paysheet-id', params: { id: '5036' }});
+}
 
 const standardPlan = {
     plan: 'Standard',
@@ -31,7 +33,27 @@ const standardPlan = {
         'Up to 10GB storage',
         'Basic Support',
     ],
-}
+};
+
+const payCycles = reactive([{
+        id: 1,
+        subtitle: 'Jour de paie Jan 9, 2014',
+        title: '29 mai - 28 juin 2024',
+        subtitle_bis: "2024-10-12"
+    },
+    {
+        id: 2,
+        subtitle: 'Jour de paie Jan 17, 2014',
+        title: '29 mai - 28 juin 2024',
+        subtitle_bis: "2024-10-12"
+    },
+    {
+        id: 3,
+        subtitle: 'Jour de paie Jan 28, 2014',
+        title: '29 mai - 28 juin 2024',
+        subtitle_bis: "2024-10-12"
+    },
+]);
 </script>
 
 <template>
@@ -40,14 +62,14 @@ const standardPlan = {
     <VCol cols="12">
         <VCard>
             <template #title>
-                <h4>Mes Paies</h4>
+                <h3>Mes cycles de paies</h3>
             </template>
         </VCard>
     </VCol>
 
     <VCol cols="12">
         <VCard>
-            <MyPaies class="mb-5"></MyPaies>
+            <my-paies :data="payCycles" @onSelect="redirectToPayPage" class="mb-5" />
         </VCard>
     </VCol>
     <!-- !SECTION -->

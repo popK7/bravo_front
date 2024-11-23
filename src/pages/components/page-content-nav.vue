@@ -1,34 +1,58 @@
 <script setup>
-const open = ref(['TimeSheet'])
+const open = ref([
+  'profil_data',
+])
 
-// Props
 const props = defineProps({
     data: {
         type: Array,
         required: true,
     }
-})
-// Emit
-const emit = defineEmits(['click']);
-// Functions
+});
+
+const emit = defineEmits(['click'])
+
 const handleClick = function (nav) {
-    emit('click', nav.component, nav.value)
-}
+    emit('click', nav.tab)
+};
+
 </script>
 
 <template>
-<VList v-model:opened="open">
-    <div v-for="nav in props.data" :value="nav.value" :key="nav.id">
-        <VListItem v-if="nav.items.length == 0" :prepend-icon="nav.icon" :title="nav.title" :value="nav.value" @click="handleClick(nav)" />
+  <VList v-model:opened="open">
 
-        <VListGroup v-else>
-            <template #activator="{ props }">
-                <VListItem v-bind="props" :prepend-icon="nav.icon" :title="nav.title" />
-            </template>
+    <div v-for="(item, i) in props.data" :key="i">
+      <VListItem
+      v-if="item.items?.length == 0"
+      :prepend-icon="item.icon"
+      :title="item.title"
+      :value="item.value"
+      @click="handleClick(item)"
+    />
 
-            <VListItem v-for="item in nav.items" :prepend-icon="item.icon" :title="item.title" :value="item.value" :key="item.id" @click="handleClick(item)" />
-        </VListGroup>
+    <VListGroup v-else :value="item.value">
+      <template #activator="{ props }">
+        <VListItem
+          v-bind="props"
+          :prepend-icon="item.icon"
+          :title="item.title"
+        />
+      </template>
+      <VListItem
+          v-for="(nav, i) in item.items"
+          :key="i"
+          :value="nav.value"
+          :title="nav.title"
+          :prepend-icon="nav.icon"
+          @click="handleClick(nav)"
+        />
+    </VListGroup>
     </div>
 
-</VList>
+
+  </VList>
 </template>
+
+<style scoped>
+.v-list-group__items .v-list-item { padding-inline-start: calc(0px + var(--indent-padding)) !important;}
+</style>

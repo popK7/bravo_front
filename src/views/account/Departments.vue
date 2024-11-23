@@ -1,6 +1,5 @@
 <script setup>
 import sites from "@/pages/components/listWithIndicator.vue"
-import addSite from "@/views/account/siteDrawer.vue"
 import { reactive } from "vue";
 const isDrawerOpen = ref(false)
 
@@ -46,11 +45,15 @@ const props = defineProps({
 <VCard>
     <template #title>
         <VRow>
-            <VCol class=" mt-5" md="12">
+            <VCol md="12">
                 <div class="d-flex justify-space-between">
-                    <h4>Departements</h4>
+                  <VChip
+                      label>
+                      <h3>Départements</h3>
+                    </VChip>
                     <VBtn size="small" @click="add">
-                        <VIcon end icon="tabler-plus" class="mr-2" /> Ajouter
+                        Ajouter
+                        <VIcon icon="tabler-square-check"  />
                     </VBtn>
                 </div>
             </VCol>

@@ -1,105 +1,30 @@
 <script setup>
-import {
-  avatarText,
-  kFormatter,
-} from '@core/utils/formatters'
-import { ref, watch } from 'vue'
+import list from "@/views/badges/tables/Badges.vue"
+import addResource from "@/pages/components/bravo/btnPageAdd.vue"
+import drawer from '@/views/badges/Drawer.vue'
 
-import ProductList from './components/BadgeList.vue';
-import AddNewProductDrawer from '@/views/products/AddNewProductDrawer.vue'
+const isDrawerVisible = ref(false)
 
-let isAddNewProductDrawerVisible = ref(false)
-
-const props = defineProps({
-  userData: {
-    type: Object, 
-    required: true,
-  },
-  loader: {
-    type: Boolean,
-    default: true,
-    required: true,
-  },
-})
-let isLoading = ref(props.loader);
-watch(() => props.loader, (loader, prevLoader) => { 
-  console.log(loader);
-})
-
-const standardPlan = {
-  plan: 'Standard',
-  price: 99,
-  benefits: [
-    '10 Users',
-    'Up to 10GB storage',
-    'Basic Support',
-  ],
-}
-
-const addProduct = function() {
-  console.log('successs');
-  isAddNewProductDrawerVisible.value = true
-};  
+const showDrawer = function() {
+  isDrawerVisible.value = true;
+};
 </script>
 
 <template>
-  <VRow>
-    <!-- SECTION User Details -->
-    <VCol cols="12">
-      <VCard v-if="props.userData && !props.loader">
-            <VCardText>
-                <div class="d-flex justify-content-between salaire_header mb-5">
-                    <h3 class="#">Inventaires</h3>
-                    <VBtn size="small" @click="addProduct">
-                        Ajouter
-                    </VBtn>
-                </div>
-            </VCardText>
-        </VCard>
-    </VCol>
-    <VCol cols="12">
-      <product-list v-if="props.userData && !props.loader"></product-list>
-      <VCard v-else class="is_loading_spinner">
-        <VProgressCircular
-          :size="30"
-          width="3"
-          color="primary"
-          indeterminate
-          class="progress_class"
-        />
-      </VCard>
-    </VCol>
-    <!-- !SECTION -->
-    <VCol cols="12">
-      <AddNewProductDrawer
-      v-model:isDrawerOpen="isAddNewProductDrawerVisible"
-      @user-data="addNewUser"
-    />
-    </VCol>
-  </VRow>
-  
+<div>
+    <VCard class="mb-5">
+        <template #title>
+            <h4>Mes badges d'accès</h4>
+        </template>
+    </VCard>
+    <!-- timesheet list -->
+    <list />
+    <!-- drawer -->
+    <drawer tab="add_badge" v-model:isDrawerOpen="isDrawerVisible" />
+</div>
 </template>
 
-<style lang="scss" scoped>
-.card-list {
-  --v-card-list-gap: 0.75rem;
-}
 
-.text-capitalize {
-  text-transform: capitalize !important;
-}
 
-.is_loading_spinner{
-  padding: 50px;
-  display: flex;
-  justify-content: center;
-}
-.hour_regime{
-  margin: auto 15%;
-}
-</style>
-<style scoped>
-.justify-content-between {
-  justify-content: space-between;
-}
-</style>
+
+

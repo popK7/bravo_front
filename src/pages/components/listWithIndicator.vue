@@ -39,7 +39,7 @@ const slectItem = function(item) {
         <VListItemTitle>
           <div class="d-flex" style="flex-direction: column">
             <b>{{ item.name }}</b>
-            <i class="text-small">{{item.description}}</i>
+            <span class="text-small">{{item.description}}</span>
           </div>
         </VListItemTitle>
 

@@ -25,7 +25,7 @@ watch(locale, val => {
 })
 
 const currentLang = ref(['en'])
-const router = useRouter()
+const router = useRouter();
 </script>
 
 <template>
@@ -51,7 +51,7 @@ const router = useRouter()
           v-for="item in props.items"
           :key="item.i18nLang"
           :value="item.i18nLang"
-           @click="router.push(item.to)"
+          @click="router.push(item.to)"
         >
           <!-- Language label -->
           <VListItemTitle>{{ item.label }}</VListItemTitle>

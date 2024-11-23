@@ -4,6 +4,8 @@ import {
     kFormatter,
 } from '@core/utils/formatters'
 import { ref, watch } from 'vue'
+import TimeSheetsTable from '@/views/presences/tables/TimeSheets.vue'
+import drawer from '@/views/presences/drawer.vue'
 
 const days = function (from, to) {
     var d = new Date(from),
@@ -36,7 +38,7 @@ const props = defineProps({
     loader: {
         type: Boolean,
         default: true,
-        required: true,
+        required: false,
     },
 })
 
@@ -127,12 +129,17 @@ const workingHours = [
     totak: 40,
   }
 ]
+const drawerOpen = ref(false);
+const addTimeSheet = function() {
+  drawerOpen.value = true;
+}
 const emit = defineEmits([
   'onshowDetail',
   'onChange'
 ])
-const viewDetail=function(data) {
-  emit('onshowDetail', data)
+
+const drawerClose = function() {
+  drawerOpen.value = false;
 };
 
 </script>
@@ -143,14 +150,13 @@ const viewDetail=function(data) {
     <VCol cols="12">
       <VCard>
         <VCardText>
-            <div class="range_piker">
-              <AppDateTimePicker
-                v-model="dateRange" 
-                label="Intervalle"
-                Placeholder="Intervalle"
-                :config="{ mode: 'range' }" 
-              />
+            <div class="d-flex justify-space-between">
+              <div class="title">
+              <h3>Fueille de temps</h3>
             </div>
+            
+            </div>
+            
         </VCardText>
         
       </VCard>
@@ -159,36 +165,42 @@ const viewDetail=function(data) {
     <!-- SECTION User Details -->
     <VCol cols="12">
         <VCard>
-            <template #title>
-                <h4>Feuille de temps</h4>
-            </template>
             <VCardText class="#">
                 <!-- 👉 Done task -->
                 <VRow>
                     <!-- 👉 Done task -->
                     <VCol cols="8">
-                        <list @onAttendanceView="viewDetail" :items="items"/>
+                      <VRow>
+                         <vCol md="12">
+                            <div class="btn-add">
+                              <VBtn size="small" @click="addTimeSheet">
+                                Ajouter
+                                <VIcon
+                                  end
+                                  icon="tabler-checkbox"
+                                />
+                              </VBtn>
+                            </div>
+                         </vCol>
+                         <vCol md="12"> 
+                            <TimeSheetsTable />
+                         </vCol>
+                      </VRow>
                     </VCol>
                     <!-- 👉 Done task -->
                     <VCol cols="4">
                         <VRow>
                           <!-- 👉 Weekly Overview -->
                             <VCol cols="12">
-                                <VCard class="" title="Aperçu hebdomadaire">
-                                    <template #title>
-                                      <h5>Aperçu hebdomadaire</h5>
-                                    </template>
-                                    <simpleList class="mb-5" :items="tracksTimes" />
-                                </VCard>
+                                 <h3 class="mb-5">Aperçu hebdomadaire</h3>
+                                <simpleList class="mb-3" :items="tracksTimes" />
                             </VCol>
+
+                            <VDivider></VDivider>
                             <!-- 👉 Working hours -->
                             <VCol cols="12">
-                                <VCard class="" title="Horaire de travail">
-                                  <template #title>
-                                      <h5>Horaire de travail</h5>
-                                    </template>
-                                    <simpleList class="mb-5" :items="workingHours"/>
-                                </VCard>
+                                <h3 class="mb-5 mt-2">Aperçu hebdomadaire</h3>
+                                <simpleList class="mb-5" :items="workingHours"/>
                             </VCol>
                         </VRow>
                        
@@ -201,6 +213,7 @@ const viewDetail=function(data) {
 
         </VCard>
     </VCol>
+    <drawer tab="sheet" :form="form" :isDrawerOpen="drawerOpen" @update:isDrawerOpen="drawerClose" />
     <!-- !SECTION -->
 </VRow>
 
@@ -215,6 +228,10 @@ const viewDetail=function(data) {
     text-transform: capitalize !important;
 }
 
+.justify-flex-end{
+  justify-content: flex-end !important;
+}
+
 .is_loading_spinner {
     padding: 50px;
     display: flex;
@@ -222,6 +239,6 @@ const viewDetail=function(data) {
 }
 .range_piker{
     width: 25%;
-    margin: auto 75%;
 }
+
 </style>

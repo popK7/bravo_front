@@ -11,37 +11,12 @@ const country = ref()
 const city = ref()
 const postal_code = ref()
 const manager = ref()
-const status = ref();
+const description = ref();
 const handleSubmit = ref(false)
 
 const emit = defineEmits([
     'save',
 ])
-
-const props = defineProps({
-    managers: {
-        type: Array,
-        default: () => []
-    },
-    cities: {
-        type: Array,
-        default: () => []
-    },
-    countries: {
-        type: Array,
-        default: () => []
-    },
-    status: {
-        type: Array,
-        default: () => []
-    },
-    isFinished: {
-        type: Boolean,
-        default: false
-    },
-    
-});
-
 // submit form
 const onSubmit = function () {
     refForm.value ?.validate().then(({ valid: isValid }) => {
@@ -74,16 +49,20 @@ const onSubmit = function () {
             <AppTextField v-model="name" :rules="[requiredValidator]" label="Nom" placeholder="Nom du site" />
         </VCol>
 
-        <!-- 👉 Status -->
-        <VCol cols="12">
-            <AppSelect v-model="status" label="Select Status" :items="props.status" placeholder="Select Status" />
-        </VCol>
+         <!-- 👉 Description -->
+         <VCol cols="12">
+          <AppTextarea
+          label="Description"
+          placeholder="Déscription"
+          v-model="description"
+        />
+         </VCol>
 
         <!-- 👉 Submit and Cancel -->
         <VCol cols="12">
             <VBtn type="submit" class="me-3">
                 Envoyer
-                <VProgressCircular :size="20" width="3" color="" indeterminate class="ml-2" v-if="props.isFinished"/>
+                <VProgressCircular :size="20" width="3" color="" indeterminate class="ml-2" v-if="handleSubmit"/>
             </VBtn>
         </VCol>
     </VRow>

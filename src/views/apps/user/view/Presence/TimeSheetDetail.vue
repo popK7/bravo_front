@@ -19,20 +19,6 @@ const props = defineProps({
         required: true,
     },
 })
-let isLoading = ref(props.loader);
-watch(() => props.loader, (loader, prevLoader) => {
-    console.log(loader);
-})
-
-const standardPlan = {
-    plan: 'Standard',
-    price: 99,
-    benefits: [
-        '10 Users',
-        'Up to 10GB storage',
-        'Basic Support',
-    ],
-}
 
 const isUserInfoEditDialogVisible = ref(false)
 const isUpgradePlanDialogVisible = ref(false)
@@ -102,7 +88,7 @@ const emit = defineEmits([
 ])
 const viewDetail=function(data) {
   console.log(data);
-} 
+};
 </script>
 
 <template>
@@ -142,17 +128,12 @@ const viewDetail=function(data) {
                                 </VCard>
                             </VCol>
                         </VRow>
-                       
-
                     </VCol>
                 </VRow>
             </VCardText>
 
             <VDivider />
 
-        </VCard>
-        <VCard v-else class="is_loading_spinner">
-            <VProgressCircular :size="30" width="3" color="primary" indeterminate class="progress_class" />
         </VCard>
     </VCol>
     <!-- !SECTION -->

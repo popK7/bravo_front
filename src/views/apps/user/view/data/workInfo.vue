@@ -50,9 +50,6 @@ const save = function() {
     <!-- SECTION User Details -->
     <VCol cols="12">
       <VCard>
-        <template #title>
-          <h4>Informations de l'employé</h4>
-        </template>
         <VCardText class="">
           <!-- 👉 Personnal data -->
           <WorkInfo @onHandleInfos='save'/>

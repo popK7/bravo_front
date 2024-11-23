@@ -1,168 +1,61 @@
 <script setup>
-import { useTheme } from 'vuetify'
-import AnalyticsEarningReportsWeeklyOverview from '@/views/dashboards/analytics/AnalyticsEarningReportsWeeklyOverview.vue'
-import AnalyticsMonthlyCampaignState from '@/views/dashboards/analytics/AnalyticsMonthlyCampaignState.vue'
-import AnalyticsProjectTable from '@/views/dashboards/analytics/AnalyticsProjectTable.vue'
-import AnalyticsSalesByCountries from '@/views/dashboards/analytics/AnalyticsSalesByCountries.vue'
-import AnalyticsSalesOverview from '@/views/dashboards/analytics/AnalyticsSalesOverview.vue'
-import AnalyticsSourceVisits from '@/views/dashboards/analytics/AnalyticsSourceVisits.vue'
-import AnalyticsSupportTracker from '@/views/dashboards/analytics/AnalyticsSupportTracker.vue'
-import AnalyticsTotalEarning from '@/views/dashboards/analytics/AnalyticsTotalEarning.vue'
-import AnalyticsWebsiteAnalytics from '@/views/dashboards/analytics/AnalyticsWebsiteAnalytics.vue'
+import pageContentNav from '@/pages/components/page-content-nav.vue'
+import {menus} from "@/helpers/menus"
+import dashboard from "@/views/indicators/dashboard.vue"
+import seniorities from "@/views/indicators/seniorities.vue"
+import absences from "@/views/indicators/absences.vue"
+import payrolls from "@/views/indicators/payrolls.vue"
+import recrutments from "@/views/indicators/recrutments.vue"
+import dismissals from "@/views/indicators/dismissals.vue" 
+import taxes from "@/views/indicators/taxes.vue" 
 
-const vuetifyTheme = useTheme()
-const currentTheme = vuetifyTheme.current.value.colors
 
-const statisticsVertical = {
-  title: 'Revenue Generated',
-  color: 'success',
-  icon: 'tabler-credit-card',
-  stats: '97.5k',
-  height: 97,
-  series: [{
-    data: [
-      300,
-      350,
-      330,
-      380,
-      340,
-      400,
-      380,
-    ],
-  }],
-  chartOptions: {
-    chart: {
-      height: 110,
-      type: 'area',
-      parentHeightOffset: 0,
-      toolbar: { show: false },
-      sparkline: { enabled: true },
-    },
-    tooltip: { enabled: false },
-    markers: {
-      colors: 'transparent',
-      strokeColors: 'transparent',
-    },
-    grid: { show: false },
-    colors: [currentTheme.success],
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shadeIntensity: 0.8,
-        opacityFrom: 0.6,
-        opacityTo: 0.1,
-      },
-    },
-    dataLabels: { enabled: false },
-    stroke: {
-      width: 2,
-      curve: 'smooth',
-    },
-    xaxis: {
-      show: true,
-      lines: { show: false },
-      labels: { show: false },
-      stroke: { width: 0 },
-      axisBorder: { show: false },
-    },
-    yaxis: {
-      stroke: { width: 0 },
-      show: false,
-    },
-  },
+
+
+import { useRouter } from 'vue-router'
+import { watch } from 'vue';
+
+const router = useRouter();
+const route = useRoute();
+
+const components = {
+  dashboard: dashboard,
+  seniorities: seniorities,
+  absences: absences,
+  payroll: payrolls,
+  recruits: recrutments,
+  dismissal: dismissals,
+  taxes: taxes
 }
+
+let component = ref(components[route.query?.tab ?? 'dashboard']);
+
+const handleClick = function(menu) {
+  if(!menu) menu = 'dashboard';
+  router.push({ name: 'indicators-rh', query: { tab: menu } })
+
+};
+
+watch(route, (to) => {
+    if(route.query.tab) {
+      component = ref(components[route.query.tab]);
+    }
+}, { flush: 'pre', immediate: true, deep: true });
+
 </script>
 
 <template>
-  <VRow class="match-height">
-    <!-- 👉 Website analytics -->
-    <VCol
-      cols="12"
-      md="6"
-    >
-      <AnalyticsWebsiteAnalytics />
+  <VRow>
+    <VCol md="3">
+      <pageContentNav @click="handleClick" :data="menus" />
     </VCol>
-
-    <!-- 👉 Sales Overview -->
-    <VCol
-      cols="12"
-      md="3"
-      sm="6"
-    >
-      <AnalyticsSalesOverview />
-    </VCol>
-
-    <!-- 👉 Statistics Vertical -->
-    <VCol
-      cols="12"
-      md="3"
-      sm="6"
-    >
-      <CardStatisticsVertical v-bind="statisticsVertical" />
-    </VCol>
-
-    <!-- 👉 Earning Reports Weekly Overview -->
-    <VCol
-      cols="12"
-      md="6"
-    >
-      <AnalyticsEarningReportsWeeklyOverview />
-    </VCol>
-
-    <!-- 👉 Support Tracker -->
-    <VCol
-      cols="12"
-      md="6"
-    >
-      <AnalyticsSupportTracker />
-    </VCol>
-
-    <!-- 👉 Sales by Countries -->
-    <VCol
-      cols="12"
-      sm="6"
-      lg="4"
-    >
-      <AnalyticsSalesByCountries />
-    </VCol>
-
-    <!-- 👉 Total Earning -->
-    <VCol
-      cols="12"
-      sm="6"
-      lg="4"
-    >
-      <AnalyticsTotalEarning />
-    </VCol>
-
-    <!-- 👉 Monthly Campaign State -->
-    <VCol
-      cols="12"
-      sm="6"
-      lg="4"
-    >
-      <AnalyticsMonthlyCampaignState />
-    </VCol>
-
-    <!-- 👉 Source Visits -->
-    <VCol
-      cols="12"
-      sm="6"
-      lg="4"
-    >
-      <AnalyticsSourceVisits />
-    </VCol>
-
-    <!-- 👉 Project Table -->
-    <VCol
-      cols="12"
-      lg="8"
-    >
-      <AnalyticsProjectTable />
+    <VCol md="9">
+       <VCard class="mb-10">
+         <template #title>
+          <h3>Indicateurs RH</h3>
+         </template>
+       </VCard>
+       <component :is="component" :key="route.query.tab"/>
     </VCol>
   </VRow>
 </template>
-
-<style lang="scss">
-@use "@core/scss/template/libs/apex-chart.scss";
-</style>

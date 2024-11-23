@@ -2,7 +2,7 @@ export default [
   {
     title: 'Employés',
     icon: { icon: 'tabler-users' },
-    to: 'employees-list',
+    to: 'employees',
   },
 
 ]

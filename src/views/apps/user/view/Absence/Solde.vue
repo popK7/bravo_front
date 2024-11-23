@@ -5,7 +5,10 @@ import {
 } from '@core/utils/formatters'
 import { ref, watch } from 'vue'
 
-import SoldeTable from "./SoldeTable.vue"
+import SoldeTable from "@/views/absences/tables/Soldes.vue" 
+import drawer from '@/views/absences/drawer.vue'
+
+const drawerOpen = ref(false);
 
 const props = defineProps({
     userData: {
@@ -15,23 +18,18 @@ const props = defineProps({
     loader: {
         type: Boolean,
         default: true,
-        required: true,
+        required: false,
     },
 })
-let isLoading = ref(props.loader);
-watch(() => props.loader, (loader, prevLoader) => {
-    console.log(loader);
-})
 
-const standardPlan = {
-    plan: 'Standard',
-    price: 99,
-    benefits: [
-        '10 Users',
-        'Up to 10GB storage',
-        'Basic Support',
-    ],
+const addSolde = function() {
+  drawerOpen.value = true;
 }
+
+const drawerClose = function() {
+  drawerOpen.value = false;
+};
+
 </script>
 
 <template>
@@ -42,8 +40,12 @@ const standardPlan = {
             <template #title>
                 <div class="d-flex justify-content-between">
                     <h4>Soldes</h4>
-                    <VBtn size="small" @click="addProduct">
+                    <VBtn size="small" @click="addSolde">
                         Ajouter
+                        <VIcon
+                          end
+                          icon="tabler-checkbox"
+                        />
                     </VBtn>
                 </div>
             </template>
@@ -51,9 +53,10 @@ const standardPlan = {
 
     </VCol>
     <VCol cols="12">
-        <SoldeTable></SoldeTable>
+        <solde-table />
     </VCol>
     <!-- !SECTION -->
+    <drawer tab="update_solde" :form="form" :isDrawerOpen="drawerOpen" @update:isDrawerOpen="drawerClose" />
 </VRow>
 </template>
 

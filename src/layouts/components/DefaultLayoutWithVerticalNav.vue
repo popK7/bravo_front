@@ -37,15 +37,15 @@ const { width: windowWidth } = useWindowSize()
           />
         </IconBtn>
 
-        <NavSearchBar class="ms-lg-n3" />
+        <NavSearchBar class="ms-lg-n3" v-if="$can('Admin')"/>
 
         <VSpacer />
 
         <NavBarRequest class="me-1" />
-        <NavBarI18n class="me-1" />
-        <NavBarSetting class="me-1" />
-        <NavbarThemeSwitcher class="me-1" />
-        <NavbarShortcuts class="me-1" />
+        <NavBarI18n class="me-1" v-if="$can('Admin')"/>
+        <NavBarSetting class="me-1"  v-if="$can('Admin')"/>
+        <NavbarThemeSwitcher class="me-1" v-if="$can('Admin')"/>
+        <NavbarShortcuts class="me-1" v-if="$can('Admin')"/>
         <NavBarNotifications class="me-2" />
         <UserProfile />
       </div>

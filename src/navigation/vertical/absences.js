@@ -4,7 +4,7 @@ export default [
     icon: { icon: 'tabler-plane' },
     children: [
       { title: 'Soldes', to: 'absences-soldes' },
-      { title: 'Demends', to: 'absences-demands' },
+      { title: 'Demandes', to: 'absences' },
       { title: 'Mes Congés', to: { name: 'absences-my', params: { id: '5036' } } },
     ],
   },

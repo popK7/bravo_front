@@ -5,7 +5,9 @@ import {
 } from '@core/utils/formatters'
 import { ref, watch } from 'vue'
 
-import DemandsTable from "./DemandsTable.vue"
+import DemandsTable from "@/views/absences/tables/Demands.vue" 
+import drawer from '@/views/absences/drawer.vue'
+
 
 const props = defineProps({
     userData: {
@@ -14,24 +16,21 @@ const props = defineProps({
     },
     loader: {
         type: Boolean,
-        default: true,
-        required: true,
+        default: false,
+        required: false,
     },
 })
-let isLoading = ref(props.loader);
-watch(() => props.loader, (loader, prevLoader) => {
-    console.log(loader);
-})
 
-const standardPlan = {
-    plan: 'Standard',
-    price: 99,
-    benefits: [
-        '10 Users',
-        'Up to 10GB storage',
-        'Basic Support',
-    ],
+const drawerOpen = ref(false);
+
+const addDemand = function() {
+  drawerOpen.value = true;
+}
+
+const drawerClose = function() {
+  drawerOpen.value = false;
 };
+
 </script>
 
 <template>
@@ -42,8 +41,12 @@ const standardPlan = {
             <template #title>
                 <div class="d-flex justify-content-between">
                     <h4>Demandes</h4>
-                    <VBtn size="small" @click="addProduct">
+                    <VBtn size="small" @click="addDemand">
                         Ajouter
+                        <VIcon
+                          end
+                          icon="tabler-checkbox"
+                        />
                     </VBtn>
                 </div>
 
@@ -52,9 +55,10 @@ const standardPlan = {
         </VCard>
     </VCol>
     <VCol cols="12">
-        <DemandsTable></DemandsTable>
+        <demands-table />
     </VCol>
     <!-- !SECTION -->
+    <drawer tab="demand" :form="form" :isDrawerOpen="drawerOpen" @update:isDrawerOpen="drawerClose" />
 </VRow>
 </template>
 

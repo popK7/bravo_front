@@ -17,7 +17,7 @@ const router = createRouter({
         if (userRole === 'admin')
           return { name: 'dashboards' }
         if (userRole === 'client')
-          return { name: 'access-control' }
+          return { name: 'dashboards' }
         
         return { name: 'login', query: to.query }
       },

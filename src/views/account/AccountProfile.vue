@@ -7,7 +7,7 @@ import profileForm from "./forms/AccountProfileForm.vue"
       <h4>Information générale</h4>
     </template>
     <VCardText>
-      <profile-form></profile-form>
+      <profile-form />
     </VCardText>
   </VCard>
 </template>

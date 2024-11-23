@@ -21,7 +21,7 @@ const props = defineProps({
   loader: {
     type: Boolean,
     default: true,
-    required: true,
+    required: false,
   },
 })
 let isLoading = ref(props.loader);
@@ -48,9 +48,6 @@ const saveTeam = function() {
     <!-- SECTION User Details -->
     <VCol cols="12">
       <VCard>
-        <template #title>
-          <h4>Structure de l'entreprise</h4>
-        </template>
         <VCardText class="#">
           <!-- 👉 Personnal data -->
           <WorkerHierachie @onHandleSaveTeam="saveTeam"/>

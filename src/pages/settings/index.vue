@@ -111,7 +111,7 @@ const absences_presences = [
         modules: [{
             id: 41,
             name: 'Regime horaire',
-            to: 'settings/presences/regimes',
+            to: 'settings/presences',
             icon: 'tabler-lock-open',
         }],
     },
@@ -145,19 +145,19 @@ const account = [
         modules: [{
                 id: 31,
                 name: 'Sites',
-                to: 'settings/company-structures/sites',
+                to: 'settings/structures/sites',
                 icon: 'tabler-lock-open',
             },
             {
                 id: 32,
                 name: 'Departments',
-                to: 'settings/company-structures/departments',
+                to: 'settings/structures/departments',
                 icon: 'tabler-lock-open',
             },
             {
                 id: 33,
                 name: 'Functions',
-                to: 'settings/company-structures/positions',
+                to: 'settings/structures/positions',
                 icon: 'tabler-lock-open',
             }
         ],
@@ -170,13 +170,13 @@ const account = [
         modules: [{
                 id: 31,
                 name: 'Documents',
-                to: 'settings/company-structures/sites',
+                to: 'settings/documents/employer',
                 icon: 'tabler-lock-open',
             },
             {
                 id: 32,
                 name: 'Note circulaire',
-                to: 'settings/company-structures/departments',
+                to: 'settings/documents/circulars',
                 icon: 'tabler-lock-open',
             },
         ],
@@ -189,7 +189,7 @@ const account = [
         modules: [{
                 id: 31,
                 name: 'Documents',
-                to: 'settings/company-structures/sites',
+                to: 'settings/documents/employees',
                 icon: 'tabler-lock-open',
             },
         ],
@@ -204,8 +204,8 @@ const Expense_paies = [
         icon: 'tabler-cash',
         modules: [{
             id: 41,
-            name: 'Type remuneration additionnelle',
-            to: 'presence_regime.list',
+            name: 'Remunerations additionnelles',
+            to: 'settings/paies',
             icon: 'tabler-lock-open',
         }],
     },
@@ -216,10 +216,29 @@ const Expense_paies = [
         icon: 'tabler-wallet',
         modules: [{
                 id: 51,
-                name: 'Catégorie de frais',
-                to: 'settings/absences/regimes',
+                name: 'Catégories',
+                to: 'settings/expenses',
                 icon: 'tabler-lock-open',
             },
+        ],
+    },
+    {
+        id: 6,
+        name: 'Cotisations',
+        description: '',
+        icon: 'tabler-wallet',
+        modules: [{
+                id: 51,
+                name: 'Salriales',
+                to: 'settings/cotisations/employees',
+                icon: 'tabler-lock-open',
+            },
+            {
+                id: 52,
+                name: 'Patronnales',
+                to: 'settings/cotisations/employers',
+                icon: 'tabler-lock-open',
+            }
         ],
     },
 ];

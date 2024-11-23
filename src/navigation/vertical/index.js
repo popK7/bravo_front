@@ -10,5 +10,9 @@ import indicators from './indicators'
 import payroll from './payroll'
 import presences from './presences'
 import workflows from './workflows'
+import currentUser from './current-user'
+import reporting from './reports'
 
-export default [...dashboard, ...calendars, ...employees, ...presences, ...absences, ...payroll, ...expenses, ...employeeData, ...accountData, ...workflows, ...indicators]
+
+
+export default [...dashboard, ...calendars, ...currentUser, ...employees, ...presences, ...absences, ...payroll, ...expenses, ...employeeData, ...accountData, ...reporting, ...workflows, ...indicators]

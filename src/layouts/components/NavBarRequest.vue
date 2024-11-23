@@ -6,25 +6,28 @@ const { isAppRtl } = useThemeConfig()
 
 const requests = [
   {
-    label: 'Request an absence',
+    label: 'Ajouter une demande',
     i18nLang: 'AbsenceRequest',
-    to: { name: 'apps-calendar' },
+    to: { name: 'employees-id', params:{id: 50}, query:{tab: 'demands'} },
+    isClient: true
   },
   {
-    label: 'Create an expense report',
+    label: 'Ajouter une note de frais',
     i18nLang: 'ExpenseNoteRequest',
-    to: { name: 'apps-calendar' },
+    to:{ name: 'employees-id', params:{id: 50}, query:{tab: 'expense_notes'} },
+    isClient: true
   },
   {
     label: 'Import employees',
     i18nLang: 'EmployeesImportRequest',
     to: { name: 'apps-calendar' },
+    isClient: false
   },
 ]
 
 const handleLangChange = co => {
   console.log(co);
-}
+};
 </script>
 
 <template>

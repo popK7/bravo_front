@@ -33,7 +33,7 @@ const checkAll = computed({
     else if (store.selectedCalendars.length === store.availableCalendars.length)
       store.selectedCalendars = []
   },
-})
+});
 </script>
 
 <template>
@@ -114,6 +114,12 @@ const checkAll = computed({
     />
   </div>
 </template>
+
+<route lang="yaml">
+  meta:
+    action: read
+    subject: AclDemo
+  </route>
 
 <style lang="scss">
 @use "@core/scss/template/libs/full-calendar";

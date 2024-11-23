@@ -38,8 +38,9 @@ const items = [
 
 const value = ref([47])
 watch(value, async (newValue, oldValue) => {
+
   emit('onChange', {code: newValue})
-})
+});
 </script>
 
 <template>
@@ -61,4 +62,5 @@ watch(value, async (newValue, oldValue) => {
       </VChip>
     </template>
   </AppSelect>
+  
 </template>

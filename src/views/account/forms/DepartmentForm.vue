@@ -11,36 +11,13 @@ const country = ref()
 const city = ref()
 const postal_code = ref()
 const manager = ref()
+const description = ref()
 const status = ref();
 const handleSubmit = ref(false)
 
 const emit = defineEmits([
     'save',
 ])
-
-const props = defineProps({
-    managers: {
-        type: Array,
-        default: () => []
-    },
-    cities: {
-        type: Array,
-        default: () => []
-    },
-    countries: {
-        type: Array,
-        default: () => []
-    },
-    status: {
-        type: Array,
-        default: () => []
-    },
-    isFinished: {
-        type: Boolean,
-        default: false
-    },
-    
-});
 
 // submit form
 const onSubmit = function () {
@@ -71,7 +48,7 @@ const onSubmit = function () {
     <VRow>
               <!-- 👉 Manager -->
               <VCol cols="12">
-            <AppSelect v-model="manager" :items="props.managers" item-title="name" item-value="name" placeholder="Responsable" label="Responsable" clearable clear-icon="tabler-x">
+            <AppSelect v-model="manager" :items="[]" item-title="name" item-value="name" placeholder="Responsable" label="Responsable" clearable clear-icon="tabler-x">
                 <template #selection="{ item }">
                     <VChip>
                         <VAvatar start :image="item.raw.avatar" />
@@ -85,16 +62,19 @@ const onSubmit = function () {
             <AppTextField v-model="name" :rules="[requiredValidator]" label="Nom" placeholder="Nom du site" />
         </VCol>
 
-        <!-- 👉 Status -->
+         <!-- 👉 Description -->
         <VCol cols="12">
-            <AppSelect v-model="status" label="Select Status" :items="props.status" placeholder="Select Status" />
+          <AppTextarea
+          label="Description"
+          placeholder="Déscription"
+          v-model="description"
+        />
         </VCol>
-
         <!-- 👉 Submit and Cancel -->
         <VCol cols="12">
             <VBtn type="submit" class="me-3">
                 Envoyer
-                <VProgressCircular :size="20" width="3" color="" indeterminate class="ml-2" v-if="!props.isFinished"/>
+                <VProgressCircular :size="20" width="3" color="" indeterminate class="ml-2" v-if="handleSubmit"/>
             </VBtn>
         </VCol>
     </VRow>
