@@ -10,33 +10,27 @@ import {structures} from '@/helpers/settings-nav'
 
 import { useRoute } from 'vue-router';
 
-const uris = {
+const components = {
     'positions': positions,
     'departments': departments,
     'sites': sites,
 
 }
 const route = useRoute()
-const currentComponent = ref(uris[route.params.tab])
+const currentComponent = ref(components[route.params.tab])
 const activeTab = ref(route.params.tab)
 
 const isDrawerOpen = ref(false)
-const isDepartmentShowDrawer = ref(false)
-const isFinishedAdd = ref(true)
-const isSnackbarTopEndVisible = false
+
 
 const router = useRouter()
+
+const addMessage = ref("***");
+const showAlert = ref(false);
 
 const showDrawer = function () {
     isDrawerOpen.value = true
 }
-
-const showDepartmentDrawer = function () {
-    isDepartmentShowDrawer.value = true
-}
-
-const addMessage = ref("***");
-const showAlert = ref(false);
 
 const create = function (data) {
     isFinishedAdd.value = false
@@ -76,35 +70,42 @@ const create = function (data) {
         }
     }, 5000);
 }
+
+const icons = {
+    positions: 'tabler-accessible',
+    departments: 'tabler-map-pin-filled',
+    sites: 'tabler-ankh',
+}
+const icon = ref(icons[route.params.tab]);
 // Sites
 const siteList = reactive([
-    { id: 1, name: 'kin-01', description: '4, rue de la fonde n°23', icon: "tabler-map-pin-filled", total: 6 },
-    { id: 2, name: 'kin-02', description: '4, rue de la fonde n°23', icon: "tabler-map-pin-filled", total: 6 },
-    { id: 3, name: 'kin-03', description: '4, rue de la fonde n°23', icon: "tabler-map-pin-filled", total: 6 },
-    { id: 4, name: 'kin-04', description: '4, rue de la fonde n°23', icon: "tabler-map-pin-filled", total: 6 },
+    { id: 1, name: 'kin-01', description: '4, rue de la fonde n°23', icon: icons.sites, total: 9 },
+    { id: 2, name: 'kin-02', description: '4, rue de la fonde n°23', icon: icons.sites, total: 9 },
+    { id: 3, name: 'kin-03', description: '4, rue de la fonde n°23', icon: icons.sites, total: 9 },
+    { id: 4, name: 'kin-04', description: '4, rue de la fonde n°23', icon: icons.sites, total: 9 },
 ]);
 
 // Departments
 const departmentList = reactive([
-    { id: 1, name: 'kin-01', description: '4, rue de la fonde n°23', icon: "tabler-ankh", total: 6 },
-    { id: 2, name: 'kin-02', description: '4, rue de la fonde n°23', icon: "tabler-ankh", total: 6 },
-    { id: 3, name: 'kin-03', description: '4, rue de la fonde n°23', icon: "tabler-ankh", total: 6 },
-    { id: 4, name: 'kin-04', description: '4, rue de la fonde n°23', icon: "tabler-ankh", total: 6 },
+    { id: 1, name: 'kin-01', description: '4, rue de la fonde n°23', icon: icons.departments, total: 6 },
+    { id: 2, name: 'kin-02', description: '4, rue de la fonde n°23', icon: icons.departments, total: 6 },
+    { id: 3, name: 'kin-03', description: '4, rue de la fonde n°23', icon: icons.departments, total: 6 },
+    { id: 4, name: 'kin-04', description: '4, rue de la fonde n°23', icon: icons.departments, total: 6 },
 ]);
 
 // Positions
 const positionList = reactive([
-    { id: 1, name: 'kin-01', description: '4, rue de la fonde n°23', icon: "tabler-accessible", total: 6 },
-    { id: 2, name: 'kin-02', description: '4, rue de la fonde n°23', icon: "tabler-accessible", total: 6 },
-    { id: 3, name: 'kin-03', description: '4, rue de la fonde n°23', icon: "tabler-accessible", total: 6 },
-    { id: 4, name: 'kin-04', description: '4, rue de la fonde n°23', icon: "tabler-accessible", total: 6 },
+    { id: 1, name: 'kin-01', description: '4, rue de la fonde n°23', icon: icons.positions, total: 11 },
+    { id: 2, name: 'kin-02', description: '4, rue de la fonde n°23', icon: icons.positions, total: 11 },
+    { id: 3, name: 'kin-03', description: '4, rue de la fonde n°23', icon: icons.positions, total: 11 },
+    { id: 4, name: 'kin-04', description: '4, rue de la fonde n°23', icon: icons.positions, total: 11 },
 ]);
 
 
-const resource_list = {
-    'positions': positionList,
-    'departments': departmentList,
-    'sites': siteList,
+const data = {
+    positions: positionList,
+    departments: departmentList,
+    sites: siteList,
 
 }
 
@@ -120,17 +121,15 @@ const showDetail = function (item) {
 
 const handleClick = function (e) {
     router.push(e);
+    
 };
 
 watch(route, (to) => {
-    resources.value = resource_list[route.params.tab]
-    currentComponent.value = uris[route.params.tab];
-   
-}, { flush: 'pre', immediate: true, deep: true })
-
-const back = function() {
-      router.go(-1)
-};
+    activeTab.value = route.params.tab;
+    icon.value = icons[activeTab.value]
+    resources.value = data[activeTab.value];
+    currentComponent.value = components[activeTab.value];
+}, { flush: 'pre', immediate: true, deep: true });
 </script>
 
 <template>
@@ -140,7 +139,7 @@ const back = function() {
                 <template #title>
                     <div class="d-flex justify-space-between">
                       <div class="d-flex justify-space-between">
-                        <button class="mr-2" @click="back">
+                        <button class="mr-2" @click="router.go(-1)">
                             <VIcon size="30" icon="tabler-square-arrow-left" />
                         </button>
                         <h4>{{ route.query.name }}</h4>
@@ -160,7 +159,14 @@ const back = function() {
             <VWindowItem :value="activeTab">
                 <VRow>
                     <VCol md="12" offset-md="#">
-                        <component :is="currentComponent" :sites="resources" @on-selected="showDetail" @onShowDrawer="showDrawer"></component>
+                        <component 
+                        :is="currentComponent" 
+                        :data="resources" 
+                        :key="activeTab"
+                        :entity="activeTab"
+                        :icon="icon"
+                        @on-selected="showDetail" 
+                        @onShowDrawer="showDrawer"></component>
                     </VCol>
                 </VRow>
 

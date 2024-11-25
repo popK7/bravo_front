@@ -24,12 +24,17 @@ const handleDrawerModelValueUpdate = val => {
 }
 
 const titles = {
-  add_contract: "Ajouter un contrat"
+  add_contract: "Ajouter un contrat",
+  update_contract: "Modifier le contrat",
 }
 const components = {
-  add_contract: demandForm
+  add_contract: demandForm,
+  update_contract: demandForm,
 }
+
+const title = ref(titles[props.tab]);
 const currentComponent = ref(components[props.tab]);
+
 </script>
 
 <template>
@@ -43,7 +48,7 @@ const currentComponent = ref(components[props.tab]);
   >
     <!-- 👉 Title -->
     <AppDrawerHeaderSection
-      title="Ajouter Un contrat"
+      :title="title"
       @cancel="closeNavigationDrawer"
     />
 

@@ -13,7 +13,7 @@ const props = defineProps({
         <VCol cols="12" md="12">
           <VCard>
             <template #title>
-              <h3>Général</h3>
+              <h4>Général</h4>
             </template>
             <VCardText>
               <site-form :name="props.form.name"></site-form>

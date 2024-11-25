@@ -3,6 +3,9 @@ import { VDataTableServer } from 'vuetify/labs/VDataTable'
 import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
 import { avatarText } from '@core/utils/formatters'
+import employees from '@/pages/components/bravo/usersMultiSelect.vue'
+import demandStatus from '@/pages/components/bravo/statusMultiSelect.vue'
+
 
 const invoiceListStore = useInvoiceStore()
 const searchQuery = ref('')
@@ -150,7 +153,7 @@ watchEffect(() => {
   const [start, end] = dateRange.value ? dateRange.value.split('to') : ''
 
   fetchInvoices(searchQuery.value, selectedStatus.value, start, end, options.value)
-})
+});
 </script>
 
 <template>
@@ -161,7 +164,9 @@ watchEffect(() => {
     <VCardText class="d-flex align-center flex-wrap gap-3">
 
       <VSpacer />
-
+      <div class="mr-3">
+        <h4>Filtres</h4>
+      </div>
       <div class="d-flex align-end flex-wrap gap-3">
         <!-- 👉 Search  -->
         <div class="invoice-list-search">
@@ -172,28 +177,12 @@ watchEffect(() => {
             class="me-3"
           />
         </div>
-        <div class="invoice-list-status">
-          <AppSelect
-            v-model="selectedStatus"
-            density="compact"
-            clearable
-            clear-icon="tabler-x"
-            :items="status"
-            style="inline-size: 12rem;"
-            placeholder="Choisir Status"
-          />
+        <div class="demand-list-status">
+          <demand-status />
         </div>
 
-        <div class="invoice-list-status">
-          <AppSelect
-            v-model="selectedStatus"
-            density="compact"
-            clearable
-            clear-icon="tabler-x"
-            :items="status"
-            style="inline-size: 12rem;"
-            placeholder="Choisir employés"
-          />
+        <div class="employee-list">
+          <employees />
         </div>
       </div>
     </VCardText>

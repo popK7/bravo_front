@@ -2,23 +2,9 @@
 import { VDataTableServer } from 'vuetify/labs/VDataTable'
 import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
-import { avatarText } from '@core/utils/formatters'
-
-import avatar1 from '@images/avatars/avatar-1.png'
-import avatar2 from '@images/avatars/avatar-2.png'
-import avatar3 from '@images/avatars/avatar-3.png'
-import avatar4 from '@images/avatars/avatar-4.png'
-import avatar5 from '@images/avatars/avatar-5.png'
-import avatar6 from '@images/avatars/avatar-6.png'
- 
-const teams = [
-{avatar: avatar1, first_name: "Johe", last_name: "Doe"},
-{avatar: avatar2, first_name: "Jennie", last_name: "Obrien"},
-{avatar: avatar3, first_name: "Peter", last_name: "Harper"},
-{avatar: avatar4, first_name: "Vivian", last_name: "Padilla"},
-{avatar: avatar5, first_name: "Scott", last_name: "Wells"},
-{avatar: avatar6, first_name: "Angel", last_name: "Bishop"}
-]
+import { avatarText } from '@core/utils/formatters' 
+import cycleStatus from '@/pages/components/bravo/statusMultiSelect.vue' 
+import employees from '@/pages/components/bravo/usersMultiSelect.vue'
 
 const invoiceListStore = useInvoiceStore()
 const searchQuery = ref('')
@@ -28,6 +14,7 @@ const totalInvoices = ref(0)
 const invoices = ref([])
 const selectedRows = ref([])
 
+const emit = defineEmits(['onAction']);
 const options = ref({
   page: 1,
   itemsPerPage: 10,
@@ -47,18 +34,24 @@ const headers = [
   },
   {
     title: 'Début',
-    key: 'total',
+    key: 'from',
     align:'center'
   },
   {
     title: 'Fin',
-    key: 'date',
+    key: 'to',
     align:'center'
   },
 
   {
-    title: 'Jour paie',
+    title: 'Jour de paie',
     key: 'trending',
+    align:'center'
+  },
+
+  {
+    title: 'Total',
+    key: 'total',
     align:'center'
   },
 
@@ -70,8 +63,8 @@ const headers = [
   {
     title: 'Actions',
     key: 'actions',
+    align:'center',
     sortable: false,
-    align:'center'
   },
 ]
 
@@ -118,7 +111,6 @@ const computedMoreList = computed(() => {
     },
   ]
 })
-
 // 👉 Delete Invoices
 const deleteInvoice = id => {
   invoiceListStore.deleteInvoice(id).then(() => {
@@ -126,6 +118,10 @@ const deleteInvoice = id => {
   }).catch(error => {
     console.log(error)
   })
+}
+
+const handleAction = function(data, action) {
+  emit('onAction', data, action);
 }
 
 // 👉 watch for data table options like itemsPerPage,page,searchQuery,sortBy etc...
@@ -144,27 +140,25 @@ watchEffect(() => {
     <VCardText class="d-flex align-center flex-wrap gap-3">
 
       <VSpacer />
-
+      <div class="mr-3">
+        <h4>Filtres</h4>
+      </div>
       <div class="d-flex align-end flex-wrap gap-3">
         <!-- 👉 Search  -->
         <div class="invoice-list-search">
           <AppTextField
             v-model="searchQuery"
-            placeholder="Recherche "
+            placeholder="Rechercher un cycle"
             density="compact"
             class="me-3"
           />
         </div>
-        <div class="invoice-list-status">
-          <AppSelect
-            v-model="selectedStatus"
-            density="compact"
-            clearable
-            clear-icon="tabler-x"
-            :items="['Cloturé', 'Annullé', 'Pendding']"
-            style="inline-size: 12rem;"
-            placeholder="Choisir un status"
-          />
+        <div class="cycle-list-status">
+          <cycle-status />
+        </div>
+
+        <div class="employees-list">
+          <employees />
         </div>
       </div>
     </VCardText>
@@ -195,30 +189,20 @@ watchEffect(() => {
         </RouterLink>
       </template>
 
-      <!-- employees -->
-      <template #item.client="{ item }">
-        <div class="v-avatar-group demo-avatar-group">
-          <VAvatar :size="30" v-for="(team, i) in teams" :key="i">
-            <VImg :src="team.avatar" />
-            <VTooltip
-              activator="parent"
-              location="top"
-            >
-              {{ `${team.first_name} ${team.last_name}` }}
 
-            </VTooltip>
-          </VAvatar>
-        </div>
+      <!-- from -->
+      <template #item.from="{ item }">
+        {{ item.raw.issuedDate }}
       </template>
 
-      <!-- Total -->
+      <!-- to -->
+      <template #item.to="{ item }">
+        {{ item.raw.issuedDate }}
+      </template>
+
+      <!-- to -->
       <template #item.total="{ item }">
-        {{ item.raw.issuedDate }}
-      </template>
-
-      <!-- Issued Date -->
-      <template #item.date="{ item }">
-        {{ item.raw.issuedDate }}
+        $790,980
       </template>
 
       <!-- Balance -->
@@ -241,7 +225,7 @@ watchEffect(() => {
           <VIcon icon="tabler-eye" />
         </IconBtn>
 
-        <IconBtn @click="deleteInvoice(item.raw.id)">
+        <IconBtn @click="handleAction(item.raw, 'edit')">
           <VIcon icon="tabler-edit" />
         </IconBtn>
       </template>
@@ -289,13 +273,7 @@ watchEffect(() => {
 </template>
 
 <style lang="scss">
-#invoice-list {
-  .invoice-list-actions {
-    inline-size: 8rem;
+ .invoice-list-actions, .invoice-list-search {
+    inline-size: 6cm;
   }
-
-  .invoice-list-search {
-    inline-size: 12rem;
-  }
-}
 </style>

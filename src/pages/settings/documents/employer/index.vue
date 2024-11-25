@@ -70,12 +70,8 @@ const resources = ref(regimeList);
 
 // show detail list
 const showDetail = function(item) {
-  let uri = 'settings-expenses-pages-notes';
+  let uri = 'settings-documents-employer-pages';
   router.push({name: uri,  query: {id:item.id, name:item.name, description: item.description}})
-};
-
-const back = function() {
-  router.go(-1);
 };
 
 </script>
@@ -87,7 +83,7 @@ const back = function() {
             <template #title>
                 <div class="d-flex justify-space-between">
                     <div class="d-flex justify-space-between">
-                        <button class="mr-2" @click="back">
+                        <button class="mr-2" @click="router.go(-1);">
                             <VIcon size="30" icon="tabler-square-arrow-left" />
                         </button>
                     </div>

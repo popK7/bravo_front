@@ -6,12 +6,9 @@ import { useRoute } from 'vue-router';
 
 const currentComponent = ref(regimes) 
 const route = useRoute()
-const activeTab = ref(route.params.tab)
+const activeTab = ref('regimes')
 
 const isDrawerOpen = ref(false)
-const isDepartmentShowDrawer = ref(false)
-const isFinishedAdd = ref(true)
-const isSnackbarTopEndVisible = false
 
 const router = useRouter()
 
@@ -27,7 +24,6 @@ const addMessage = ref("***");
 const showAlert = ref(false);
 
 const createContract = function(data) {
-  isFinishedAdd.value = false
   
   setTimeout(() => {
     let resource = {
@@ -39,7 +35,6 @@ const createContract = function(data) {
     }
 
     addMessage.value = `Le contrat ${data.name} a bien été crée`;
-    isFinishedAdd.value = true;
     showAlert.value = true;
     isDrawerOpen.value = false
 

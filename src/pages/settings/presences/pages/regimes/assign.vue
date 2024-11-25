@@ -61,7 +61,7 @@ const people = [{
 <div>
   <VCard>
     <template #title>
-        <h3 class="mb-2">Assigner des employés</h3>
+        <h4 class="mb-2">Assigner des employés</h4>
     </template>
     <VCardText>
         <VForm @submit.prevent="() => {}">

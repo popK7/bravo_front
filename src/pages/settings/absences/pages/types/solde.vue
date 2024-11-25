@@ -10,11 +10,7 @@ import avatar8 from '@images/avatars/avatar-8.png'
 
 import TableList from '@/pages/components/bravo/table.vue'
 
-
-const teams = ref([
-    'Sandra Adams',
-    'Britta Holt',
-])
+const teams = ref([])
 
 const search = ref('');
 
@@ -59,37 +55,36 @@ const people = [{
         avatar: avatar8,
     },
 ];
-const items = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimache'];
 </script>
 
 <template>
 <div>
     <VCard>
         <template #title>
-            <h3>Horaire de travail</h3>
+            <h4>Assigner des employer</h4>
         </template>
         <VCardText>
             <VForm @submit.prevent="() => {}">
                 <VRow>
                     <VCol cols="12">
-                        <VRow>
-                            <VCol md="4" lg="4">
-                                <AppAutocomplete label="Jour travaillé" :items="items" placeholder="Jour de la semaine" chips multiple/>
-                            </VCol>
-                            <VCol md="4" lg="4">
-                                <AppDateTimePicker v-model="from" label="Début journée" :config="{ enableTime: true, noCalendar: true, dateFormat: 'H:i' }" placeholder="Heure début journée" />
-                                <AppDateTimePicker v-model="from" label="Fin journée" :config="{ enableTime: true, noCalendar: true, dateFormat: 'H:i' }" placeholder="Heure fin journée" />
-                            </VCol>
+                        <VRow no-gutters>
                             <!-- 👉 First Name -->
-                            <VCol md="4" lg="4">
-                                <AppDateTimePicker v-model="from" label="Début pause" :config="{ enableTime: true, noCalendar: true, dateFormat: 'H:i' }" placeholder="Heure début pause" />
-                                <AppDateTimePicker v-model="from" label="Fin pause" :config="{ enableTime: true, noCalendar: true, dateFormat: 'H:i' }" placeholder="Heure fin pause" />
+                            <VCol cols="12" md="12" class="d-flex align-items-center">
+                                <AppAutocomplete v-model="teams" chips closable-chips multiple :items="people" item-title="name" item-value="name" label="Employés" placeholder="Employés">
+                                    <template #chip="{ props, item }">
+                                        <VChip v-bind="props" :prepend-avatar="item.raw.avatar" :text="item.raw.name" />
+                                    </template>
+
+                                    <template #item="{ props, item }">
+                                        <VListItem v-bind="props" :prepend-avatar="item?.raw?.avatar" :title="item?.raw?.name" :subtitle="item?.raw?.group" />
+                                    </template>
+                                </AppAutocomplete>
                             </VCol>
                         </VRow>
                     </VCol>
 
                     <!-- 👉 submit and reset button -->
-                    <VCol cols="12" md="12" class="d-flex gap-4 justify-content-end">
+                    <VCol cols="12" md="12" class="d-flex gap-4">
                         <VBtn type="submit">
                             Envoyer
                         </VBtn>
@@ -100,33 +95,26 @@ const items = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dim
                 </VRow>
             </VForm>
         </VCardText>
-    </VCard>
+        <VCardText>
 
+        </VCardText>
+    </VCard>
     <VCard class="mt-5">
-      <template #title>
-        <h4 class="mb-2">Emplois du temps</h4>
-    </template>
-    <VCardText>
-      <VRow>
-      <VCol md="12">
-        <div style="inline-size: 272px;">
-          <AppTextField
-            v-model="search"
-            placeholder="Recherche"
-          />
-        </div>
-      </VCol> 
-      <VCol lg="12">
-        <table-list :research="search" :key="search"/>
-      </VCol>
-    </VRow>
-    </VCardText>
-</VCard>
+        <template #title>
+            <h4>Liste des employer</h4>
+        </template>
+        <VCardText>
+            <VRow>
+                <VCol md="12">
+                    <div style="inline-size: 272px;">
+                        <AppTextField v-model="search" placeholder="Recherche" />
+                    </div>
+                </VCol>
+                <VCol lg="12">
+                    <table-list :research="search" :key="search" />
+                </VCol>
+            </VRow>
+        </VCardText>
+    </VCard>
 </div>
 </template>
-
-<style>
-.justify-content-end {
-    justify-content: end;
-}
-</style>

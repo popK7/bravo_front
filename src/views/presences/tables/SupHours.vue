@@ -3,6 +3,8 @@ import { VDataTableServer } from 'vuetify/labs/VDataTable'
 import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
 import { avatarText } from '@core/utils/formatters'
+import employees from '@/pages/components/bravo/usersMultiSelect.vue'
+import supHourStatus from '@/pages/components/bravo/statusMultiSelect.vue'
 
 const emit = defineEmits(['onAction'])
 
@@ -165,9 +167,10 @@ watchEffect(() => {
     id="invoice-list"
   >
     <VCardText class="d-flex align-center flex-wrap gap-3">
-
       <VSpacer />
-
+      <div class="mr-3">
+        <h3>Filtres</h3>
+      </div>
       <div class="d-flex align-end flex-wrap gap-3">
         <!-- 👉 Search  -->
         <div class="invoice-list-search">
@@ -179,26 +182,10 @@ watchEffect(() => {
           />
         </div>
         <div class="invoice-list-status">
-          <AppSelect
-            v-model="selectedStatus"
-            density="compact"
-            clearable
-            clear-icon="tabler-x"
-            :items="['Downloaded', 'Draft', 'Sent', 'Paid', 'Partial Payment', 'Past Due']"
-            style="inline-size: 12rem;"
-            placeholder="Choisir un status"
-          />
+          <sup-hour-status />
         </div>
         <div class="invoice-list-status">
-          <AppSelect
-            v-model="selectedStatus"
-            density="compact"
-            clearable
-            clear-icon="tabler-x"
-            :items="['Downloaded', 'Draft', 'Sent', 'Paid', 'Partial Payment', 'Past Due']"
-            style="inline-size: 12rem;"
-            placeholder="Choisir employés"
-          />
+          <employees />
         </div>
       </div>
     </VCardText>

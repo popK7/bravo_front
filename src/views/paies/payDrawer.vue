@@ -1,12 +1,10 @@
 <script setup>
+
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import settingForm from "./forms/Setting.vue"
 import cycleForm from "./forms/Cycle.vue"
 import employeeAdvantageForm from "./forms/Add.vue"
 import notification from "@/pages/components/bravo/alert.vue"
-
-
-
 import { useRoute, useRouter } from 'vue-router'; 
 
 const route = useRouter();
@@ -39,16 +37,20 @@ const emit = defineEmits([
 ])
 
 const titles = {
-  advantage: 'Ajouter un avantage',
+  advantage: 'Assigner un avantage',
+  edit_remuneration: 'Modifier l\'assignation',
   setting: "Ajouter un type d'avantage",
-  cycle: "Ajouter un cycle"
+  cycle: "Ajouter un cycle",
+  edit_cycle: "Modifier le cycle"
 
 }
 
 const components = {
   advantage: employeeAdvantageForm,
   setting: settingForm,
-  cycle: cycleForm
+  cycle: cycleForm,
+  edit_remuneration: employeeAdvantageForm,
+  edit_cycle: cycleForm
 
 }
 

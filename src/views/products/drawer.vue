@@ -36,13 +36,17 @@ const status = ref()
 const titles = {
   setting: 'Ajouter un produit',
   add_demand: 'Deposer une demande',
+  assign_product: 'Assigner un produit',
+  edit_assign_product: "Editer l'assignement",
   add_product:  "Ajouter un produit",
 
 }
 const components = {
   setting: productSettingForm,
   add_demand: demandForm,
+  assign_product: demandForm,
   add_product: productForm,
+  edit_assign_product: demandForm
 
 }
 

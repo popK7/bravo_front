@@ -75,7 +75,10 @@ const people = [
 
 const isFormValid = ref(false)
 const refForm = ref()
-const solde= ref();
+
+const major_solde= ref();
+const minor_solde= ref();
+
 const category = ref(props.form ?.category ?? null)
 const from = ref(props.form ?.from ?? null)
 const to = ref(props.form ?.to ?? null)
@@ -120,61 +123,26 @@ const absences = [
 <!-- 👉 Form -->
 <VForm ref="refForm" v-model="isFormValid" @submit.prevent="onSubmit">
     <VRow>
-        <!-- 👉 Employee(s) -->
+        <!-- 👉 soldes major-->
         <VCol cols="12">
-          <AppAutocomplete
-            v-model="friends"
-            chips
-            closable-chips
-            multiple
-            :items="people"
-            item-title="name"
-            item-value="name"
-            placeholder="Choisir employé(s)"
-            label="Employé(s)"
-          >
-            <template #chip="{ props, item }">
-              <VChip
-                v-bind="props"
-                :prepend-avatar="item.raw.avatar"
-                :text="item.raw.name"
-              />
-            </template>
-
-            <template #item="{ props, item }">
-              <VListItem
-                v-bind="props"
-                :prepend-avatar="item?.raw?.avatar"
-                :title="item?.raw?.name"
-                :subtitle="item?.raw?.group"
-              />
-            </template>
-          </AppAutocomplete>
+            <AppTextField v-model="major_solde" type="number" label="Solde par ans" placeholder="Solde pour adulte" />
         </VCol>
-        <!-- 👉 absence -->
-        <VCol cols="12">
-            <AppAutocomplete
-                  label="Type absence"
-                  :items="absences"
-                  v-model="category"
-                  placeholder="Choisr une absence"
-                  class="mb-3"
-                />
-                <span class="text-small">Pour ajouter un nouveau type cliquez <a href="http://">Ici</a></span>
-              
+         <!-- 👉 soldes minor-->
+         <VCol cols="12">
+            <AppTextField v-model="minor_solde" type="number" label="Solde Mineur" placeholder="Solde pour mineur" />
         </VCol>
-        <VCol cols="12">
+         <!-- 👉 accumulation -->
+         <VCol cols="12">
           <AppTextField
-            v-model="solde"
-            label="Solde"
-            suffix="jours"
+            v-model="cumul"
+            label="Cumule"
+            suffix="ans"
             type="number"
-            placeholder="Solde"
+            placeholder="2"
           />
-        </VCol>
-        <!-- 👉 Description -->
-        <VCol cols="12">
-            <AppTextarea label="Description" placeholder="Déscription de la note" v-model="description" />
+          <div class="text-danger mt-1">
+            <small>Période de cumule des absences(N-1, N, N+1)</small>
+          </div>
         </VCol>
 
         <!-- 👉 Submit and Cancel -->

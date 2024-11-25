@@ -49,8 +49,8 @@ const employersList = reactive([
 ]);
 
 const navigations = [
-    { id: 1, title: 'Salariales', value: 'employers', component: 'employees', icon: 'tabler-users', items: [] },
-    { id: 2, title: 'Patronales', value: 'employees', component: 'employers', icon: 'tabler-users', items: [] }
+    { id: 1, title: 'Salariales', tab: 'employees', icon: 'tabler-users', items: [] },
+    { id: 2, title: 'Patronales', tab: 'employers', icon: 'tabler-users', items: [] }
 ];
 
 const status = reactive([{ title: 'Active', value: 'active' }, { title: 'Inactive', value: 'inactive' }, { title: 'Pending', value: 'pending' }]);

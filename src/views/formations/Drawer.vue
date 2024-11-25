@@ -21,12 +21,20 @@ const emit = defineEmits([
 
 const titles = {
   add_demand: "Deposer une demande",
-  add_formation: "Ajouter une formation"
+  add_formation: "Ajouter une formation",
+  assign_formation: "Assigner une formation",
+  update_assign_formation: "Modifier l'assignement"
+
 }
 
 const components = {
   add_demand: demandForm,
-  add_formation: formationForm
+  add_formation: formationForm,
+  assign_formation: formationForm,
+  update_assign_formation: formationForm,
+
+  
+
 
 }
 

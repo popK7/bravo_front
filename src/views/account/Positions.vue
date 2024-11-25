@@ -1,75 +1,59 @@
 <script setup>
-import sites from "@/pages/components/listWithIndicator.vue"
-import addSite from "@/views/account/Drawer.vue"
+import list from "@/pages/components/listWithIndicator.vue"
 import { reactive } from "vue";
 const isDrawerOpen = ref(false)
 
 const emit = defineEmits([
-  "onShowDrawer",
-  "onSelected"
+    "onShowDrawer",
+    "onSelected"
 ]);
-const add = function() {
-  emit("onShowDrawer");
+const add = function () {
+    emit("onShowDrawer");
 }
-const selected = function(item) {
-  emit("onSelected", item);
+const selected = function (item) {
+    emit("onSelected", item);
 }
 const props = defineProps({
-  sites: {
-    type: Array,
-    default:() => []
-  },
-
-  managers: {
-    type: Array,
-    default:() => []
-  },
-
-  countries: {
-    type: Array,
-    default:() => []
-  },
-
-  cities: {
-    type: Array,
-    default:() => []
-  },
-
-  status: {
-    type: Array,
-    default:() => []
-  },
+    data: {
+        type: Array,
+        default: () => []
+    },
+    entity: {
+      type: String,
+      default: 'Sites'
+    },
+    icon: {
+      type: String,
+      default: 'tabler-clock'
+    }
 
 });
 </script>
 <template>
-  <VCard>
+<VCard>
     <template #title>
-      <VRow>
-      <VCol md="12">
-        <div class="d-flex justify-space-between">
-          <VChip
-                      label>
-                      <h3>Fonctions</h3>
+        <VRow>
+            <VCol md="12">
+                <div class="d-flex justify-space-between">
+                    <VChip label>
+                        <VIcon :icon="props.icon" color="primary"/>
+                        <h3 class="ml-2">{{ props.entity }}</h3>
                     </VChip>
-        <VBtn size="small" @click="add">
-         Ajouter
-         <VIcon icon="tabler-square-check"  />
-        </VBtn>
-      </div>  
-      </VCol>
-    </VRow>
+                    <VBtn size="small" @click="add">
+                        Ajouter
+                        <VIcon icon="tabler-square-check" />
+                    </VBtn>
+                </div>
+            </VCol>
+        </VRow>
 
     </template>
     <VCardText>
-    <VRow>
-      <VCol class="mb-5" md="12">
-        <sites 
-        :items="props.sites" 
-        category="sites"
-        @selected="selected"></sites>
-      </VCol>
-    </VRow>
+        <VRow>
+            <VCol class="mb-5" md="12">
+                <list :items="props.data" category="sites" @selected="selected"></list>
+            </VCol>
+        </VRow>
     </VCardText>
-  </VCard>
+</VCard>
 </template>

@@ -49,7 +49,10 @@ const props = defineProps({
         <VRow>
             <VCol md="12">
                 <div class="d-flex justify-space-between">
-                    <h4>Regimes absence</h4>
+                <VChip label color="primary">
+                  <VIcon icon="tabler-pencil" /> 
+                  Regimes absence
+                    </VChip>
                     <VBtn size="small" @click="add">
                         Ajouter
                         <VIcon icon="tabler-square-check"  />

@@ -3,6 +3,10 @@ import { VDataTableServer } from 'vuetify/labs/VDataTable'
 import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
 import { avatarText } from '@core/utils/formatters'
+import employees from '@/pages/components/bravo/usersMultiSelect.vue'
+import certificatStatus from '@/pages/components/bravo/statusMultiSelect.vue'
+
+const emit = defineEmits(['onAction']);
 
 const invoiceListStore = useInvoiceStore()
 const searchQuery = ref('')
@@ -54,6 +58,7 @@ const headers = [
   {
     title: 'Date',
     key: 'created_at',
+    align: 'center'
   },
   {
     title: 'Actions',
@@ -121,29 +126,6 @@ const resolveInvoiceStatusVariantAndIcon = status => {
   }
 }
 
-const computedMoreList = computed(() => {
-  return paramId => [
-    {
-      title: 'Download',
-      value: 'download',
-      prependIcon: 'tabler-download',
-    },
-    {
-      title: 'Edit',
-      value: 'edit',
-      prependIcon: 'tabler-pencil',
-      to: {
-        name: 'apps-invoice-edit-id',
-        params: { id: paramId },
-      },
-    },
-    {
-      title: 'Duplicate',
-      value: 'duplicate',
-      prependIcon: 'tabler-layers-intersect',
-    },
-  ]
-})
 
 const deleteInvoice = id => {
   invoiceListStore.deleteInvoice(id).then(() => {
@@ -158,7 +140,8 @@ watchEffect(() => {
   const [start, end] = dateRange.value ? dateRange.value.split('to') : ''
 
   fetchInvoices(searchQuery.value, selectedStatus.value, start, end, options.value)
-})
+});
+
 </script>
 
 <template>
@@ -167,9 +150,11 @@ watchEffect(() => {
     id="invoice-list"
   >
     <VCardText class="d-flex align-center flex-wrap gap-3">
-
+     
       <VSpacer />
-
+      <div class="mr-3">
+        <h4>Filtres</h4>
+      </div>
       <div class="d-flex align-end flex-wrap gap-3">
         <!-- 👉 Search  -->
         <div class="invoice-list-search">
@@ -180,16 +165,13 @@ watchEffect(() => {
             class="me-3"
           />
         </div>
-        <div class="invoice-list-status">
-          <AppSelect
-            v-model="selectedStatus"
-            density="compact"
-            placeholder="Choisir un status"
-            clearable
-            clear-icon="tabler-x"
-            :items="['Downloaded', 'Draft', 'Sent', 'Paid', 'Partial Payment', 'Past Due']"
-            style="inline-size: 12rem;"
-          />
+        <!-- 👉 certificats status  -->
+        <div class="certificat-list-search">
+          <certificat-status />
+        </div>
+        <!-- 👉 employees list  -->
+        <div class="employees-list">
+          <employees />
         </div>
       </div>
     </VCardText>
@@ -268,15 +250,9 @@ watchEffect(() => {
           <VIcon icon="tabler-trash" />
         </IconBtn>
 
-        <IconBtn :to="{ name: 'apps-invoice-preview-id', params: { id: item.raw.id } }">
+        <IconBtn @click="emit('onAction', item.raw, 'edit')">
           <VIcon icon="tabler-eye" />
         </IconBtn>
-
-        <MoreBtn
-          :menu-list="computedMoreList(item.raw.id)"
-          item-props
-          color="undefined"
-        />
       </template>
 
       <template #bottom>

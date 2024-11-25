@@ -1,7 +1,7 @@
 <script setup>
 
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import demandForm from "./Forms/Demand.vue"; 
+import otherForm from "./Forms/Demand.vue"; 
 
 const props = defineProps({
   isDrawerOpen: {
@@ -10,7 +10,7 @@ const props = defineProps({
   },
   tab: {
     type: String,
-    default: 'add',
+    default: 'add_other',
   },
 })
 
@@ -24,13 +24,18 @@ const handleDrawerModelValueUpdate = val => {
 }
 
 const titles = {
-  add: "Ajouter un document"
+  add_other: "Ajouter un document",
+  update_other: "Modifier le document",
+
 }
-const title = titles[props.tab]
 const components = {
-  add: demandForm
+  add_other: otherForm,
+  update_other: otherForm,
 }
+
+const title = titles[props.tab]
 const currentComponent = ref(components[props.tab]);
+
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup>
 
-import additional from "@/views/paies/payDrawer.vue"
+import drawer from "@/views/paies/payDrawer.vue"
 import advantages from '@/views/paies/advantages.vue'
 import { useRoute } from 'vue-router';
 
@@ -141,7 +141,7 @@ const back = function() {
     </VSnackbar>
 
     <!-- Sites Drawer -->
-    <additional
+    <drawer
       v-model:isDrawerOpen="isDrawerOpen"
       :tab="activeTab"
       @on-save="createAdvantage"

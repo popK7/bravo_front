@@ -2,25 +2,25 @@
 import pageContentNav from '@/pages/components/page-content-nav.vue'
 import general from './general.vue'
 import assign from './assign.vue'
-import deleteDepartment from './delete.vue'
+import delete_ from './delete.vue'
 import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter();
 const route = useRoute();
-
+const components = {
+  general: general,
+  assign: assign,
+  delete: delete_
+}
 const currentComponent = ref(general);
-const handleClick = function(component, value) {
-  currentComponent.value = component;
+const handleClick = function(tab) {
+  currentComponent.value = components[tab];
 }
 const navigations = [
-    { id: 1, title: 'Général', value: 'general', component: general, icon: 'tabler-users', items: [] },
-    { id: 2, title: 'Assigner', value: 'assign', component: assign, icon: 'tabler-users', items: [] },
-    { id: 3, title: 'Supprimer', value: 'supprimer', component: deleteDepartment, icon: 'tabler-trash', items: [] }
+    { id: 1, title: 'Général', tab: 'general', icon: 'tabler-users', items: [] },
+    { id: 2, title: 'Assigner', tab: 'assign', icon: 'tabler-users', items: [] },
+    { id: 3, title: 'Supprimer', tab: 'delete', icon: 'tabler-trash', items: [] }
 ];
-
-const back = function() {
-  router.go(-1);
-};
 </script>
 <template>
 <div>
@@ -30,7 +30,7 @@ const back = function() {
                 <template #title>
                     <div class="d-flex justify-space-between">
                       <div class="d-flex justify-space-between">
-                        <button class="mr-2" @click="back">
+                        <button class="mr-2" @click="router.go(-1)">
                             <VIcon size="30" icon="tabler-square-arrow-left" />
                         </button>
                         <h4>{{ route.query.name }}</h4>

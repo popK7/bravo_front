@@ -177,9 +177,9 @@ const employees = [
             </template>
           </AppAutocomplete>
         </VCol>
-        <!-- 👉 categorie -->
+        <!-- 👉 avantages -->
         <VCol cols="12">
-            <AppSelect v-model="category" label="Catégorie" :rules="[requiredValidator]" :items="categories" placeholder="Selectionner une catégorie" />
+            <AppSelect v-model="category" label="Rémuneration" :rules="[requiredValidator]" :items="categories" placeholder="Selectionner une catégorie" />
         </VCol>
          <!-- 👉 Amount -->
         <VCol cols="12" md="12">

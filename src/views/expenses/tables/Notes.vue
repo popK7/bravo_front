@@ -3,6 +3,13 @@ import { VDataTableServer } from 'vuetify/labs/VDataTable'
 import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
 import { avatarText } from '@core/utils/formatters'
+import usersMultiSelect from "@/pages/components/bravo/usersMultiSelect.vue"
+import statusMultiSelect from "@/pages/components/bravo/statusMultiSelect.vue"
+
+
+const emit = defineEmits([
+  'onAction'
+])
 
 const invoiceListStore = useInvoiceStore()
 const searchQuery = ref('')
@@ -27,10 +34,12 @@ const headers = [
   {
     title: '#ID',
     key: 'id',
+    align: 'center'
   },
   {
     title: 'Raison',
     key: 'name',
+    align: 'center'
   },
   {
     title: 'Employé',
@@ -40,6 +49,7 @@ const headers = [
   {
     title: 'Catégorie',
     key: 'category',
+    align: 'center'
 
   },
   {
@@ -124,30 +134,6 @@ const resolveInvoiceStatusVariantAndIcon = status => {
   }
 }
 
-const computedMoreList = computed(() => {
-  return paramId => [
-    {
-      title: 'Download',
-      value: 'download',
-      prependIcon: 'tabler-download',
-    },
-    {
-      title: 'Edit',
-      value: 'edit',
-      prependIcon: 'tabler-pencil',
-      to: {
-        name: 'apps-invoice-edit-id',
-        params: { id: paramId },
-      },
-    },
-    {
-      title: 'Duplicate',
-      value: 'duplicate',
-      prependIcon: 'tabler-layers-intersect',
-    },
-  ]
-})
-
 const deleteInvoice = id => {
   invoiceListStore.deleteInvoice(id).then(() => {
     fetchInvoices(searchQuery.value, selectedStatus.value, dateRange.value?.split('to')[0], dateRange.value?.split('to')[1], options.value)
@@ -172,7 +158,9 @@ watchEffect(() => {
     <VCardText class="d-flex align-center flex-wrap gap-3">
 
       <VSpacer />
-
+      <div class="mr-3">
+        <h4>Filtres</h4>
+      </div>
       <div class="d-flex align-end flex-wrap gap-3">
         <!-- 👉 Search  -->
         <div class="invoice-list-search">
@@ -183,16 +171,11 @@ watchEffect(() => {
             class="me-3"
           />
         </div>
-        <div class="invoice-list-status">
-          <AppSelect
-            v-model="selectedStatus"
-            density="compact"
-            clearable
-            clear-icon="tabler-x"
-            :items="['Downloaded', 'Draft', 'Sent', 'Paid', 'Partial Payment', 'Past Due']"
-            style="inline-size: 12rem;"
-            placeholder="Choisir status"
-          />
+        <div class="expences-list-status">
+          <status-multi-select />
+        </div>
+        <div class="expences-list-users">
+          <users-multi-select />
         </div>
       </div>
     </VCardText>
@@ -257,7 +240,7 @@ watchEffect(() => {
 
       <!-- Total -->
       <template #item.category="{ item }">
-         Transport
+         <VChip label color="primary">Transport</VChip>
       </template>
 
       <!-- Issued Date -->
@@ -281,15 +264,9 @@ watchEffect(() => {
           <VIcon icon="tabler-trash" />
         </IconBtn>
 
-        <IconBtn :to="{ name: 'apps-invoice-preview-id', params: { id: item.raw.id } }">
+        <IconBtn @click="emit('onAction', item.a=raw, 'edit')">
           <VIcon icon="tabler-eye" />
         </IconBtn>
-
-        <MoreBtn
-          :menu-list="computedMoreList(item.raw.id)"
-          item-props
-          color="undefined"
-        />
       </template>
 
       <template #bottom>
@@ -335,13 +312,11 @@ watchEffect(() => {
 </template>
 
 <style lang="scss">
-#invoice-list {
-  .invoice-list-actions {
+ .invoice-list-actions {
     inline-size: 8rem;
   }
 
   .invoice-list-search {
     inline-size: 12rem;
   }
-}
 </style>

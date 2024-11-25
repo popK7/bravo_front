@@ -1,7 +1,7 @@
 <script setup>
 import pageContentNav from '@/pages/components/page-content-nav.vue'
 import general from './general.vue'
-import deleteDepartment from './delete.vue'
+import _delete from './delete.vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter();
@@ -10,15 +10,19 @@ const route = useRoute();
 const currentComponent = ref(general);
 
 const navigations = [
-    { id: 1, title: 'Général', value: 'general', component: general, icon: 'tabler-users', items: [] },
-    { id: 2, title: 'Supprimer', value: 'supprimer', component: deleteDepartment, icon: 'tabler-trash', items: [] }
+    { id: 1, title: 'Général', tab: 'general', icon: 'tabler-users', items: [] },
+    { id: 2, title: 'Supprimer', tab: 'delete', icon: 'tabler-trash', items: [] }
 ];
 
-const handleClick = function (component, value) {
-  
-    currentComponent.value = component;
+const tab = ref(null);
+const components = {
+  general: general,
+  delete: _delete
+}
+
+const handleClick = function (tab) {
+    currentComponent.value = components[tab];
 };
-const back = function () { router.go(-1); };
 </script>
 <template>
 <div>
@@ -28,12 +32,12 @@ const back = function () { router.go(-1); };
                 <template #title>
                     <div class="d-flex justify-space-between">
                         <div class="d-flex justify-space-between">
-                            <button class="mr-2" @click="back">
+                            <button class="mr-2" @click="router.go(-1)">
                                 <VIcon size="30" icon="tabler-square-arrow-left" />
                             </button>
                             <h4>{{ route.query.name }}</h4>
                         </div>
-                        <h4>Notes de frais</h4>
+                        <h4>Documents employeur</h4>
                     </div>
                 </template>
             </VCard>
@@ -49,7 +53,7 @@ const back = function () { router.go(-1); };
 
         </VCol>
         <VCol cols="8" md="8">
-            <component :is="currentComponent"></component>
+            <component :is="currentComponent" :key="tab"></component>
         </VCol>
     </VRow>
 </div>

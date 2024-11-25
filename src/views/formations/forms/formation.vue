@@ -35,7 +35,7 @@ const description = ref(props.form ?.description ?? '');
 const handleSubmit = ref(false)
 const isAssign = ref(false);
 
-const categories = ['Admin', 'Author', 'Editor', 'Maintainer', 'Subscriber'];
+const formations = ['Admin', 'Author', 'Editor', 'Maintainer', 'Subscriber'];
 
 const friends = ref([
     'Sandra Adams',
@@ -111,14 +111,9 @@ const onSubmit = function () {
 <!-- 👉 Form -->
 <VForm ref="refForm" v-model="isFormValid" @submit.prevent="onSubmit">
     <VRow>
-        <!-- 👉 Formation name -->
-        <VCol cols="12">
-            <AppTextField v-model="name" label="Libellé" placeholder="Nom de la formation" />
-        </VCol>
-
         <!-- 👉 Product Category -->
         <VCol cols="12">
-            <AppSelect v-model="category" label="Catégorie" :rules="[requiredValidator]" :items="categories" placeholder="Selectionner une catégorie" />
+            <AppSelect v-model="category" label="Formation" :rules="[requiredValidator]" :items="formations" placeholder="Selectionner une formation" />
         </VCol>
          <!-- from -->
         <VCol md="12">
@@ -129,13 +124,8 @@ const onSubmit = function () {
             <AppDateTimePicker v-model="to" label="Date fin" placeholder="Date fin" :config="{ enableTime: true, dateFormat: 'Y-m-d H:i' }" />
         </VCol>
 
-         <!-- Assign employees -->
-         <VCol cols="12">
-            <VSwitch v-model="isAssign" label="Assigner ?" />
-        </VCol>
-
         <!-- employees -->
-        <VCol cols="12" v-if="isAssign">
+        <VCol cols="12">
           <AppAutocomplete v-model="friends" chips closable-chips multiple :items="people" item-title="name" item-value="name" placeholder="Choisir employé(s)" label="Employé(s)">
               <template #chip="{ props, item }">
                   <VChip v-bind="props" :prepend-avatar="item.raw.avatar" :text="item.raw.name" />

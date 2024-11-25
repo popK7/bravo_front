@@ -3,26 +3,34 @@ import pageContentNav from '@/pages/components/page-content-nav.vue'
 import general from './general.vue'
 import assign from './assign.vue'
 import hours from './hours.vue'
-import deleteDepartment from './delete.vue'
+import delete_ from './delete.vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter();
 const route = useRoute();
 
 const currentComponent = ref(general);
+const tab = ref(null);
+
+const components = {
+  general: general,
+  assign: assign,
+  hours: hours,
+  delete: delete_
+
+}
 
 const navigations = [
-    { id: 1, title: 'Général', value: 'general', component: general, icon: 'tabler-users', items: [] },
-    { id: 2, title: 'Emploi du temps', value: 'hours', component: hours, icon: 'tabler-users', items: [] },
-    { id: 3, title: 'Assigner', value: 'assign', component: assign, icon: 'tabler-users', items: [] },
-    { id: 4, title: 'Supprimer', value: 'supprimer', component: deleteDepartment, icon: 'tabler-trash', items: [] }
+    { id: 1, title: 'Général', tab: 'general', icon: 'tabler-users', items: [] },
+    { id: 2, title: 'Emploi du temps', tab: 'hours', icon: 'tabler-users', items: [] },
+    { id: 3, title: 'Assigner', tab: 'assign', icon: 'tabler-users', items: [] },
+    { id: 4, title: 'Supprimer', tab: 'delete', icon: 'tabler-trash', items: [] }
 ];
 
-const handleClick = function (component, value) {
-  
-    currentComponent.value = component;
+const handleClick = function (tab) {
+    currentComponent.value = components[tab];
 };
-const back = function () { router.go(-1); };
+
 </script>
 <template>
 <div>
@@ -32,7 +40,7 @@ const back = function () { router.go(-1); };
                 <template #title>
                     <div class="d-flex justify-space-between">
                         <div class="d-flex justify-space-between">
-                            <button class="mr-2" @click="back">
+                            <button class="mr-2" @click="router.go(-1)">
                                 <VIcon size="30" icon="tabler-square-arrow-left" />
                             </button>
                             <h4>{{ route.query.name }}</h4>
@@ -53,7 +61,7 @@ const back = function () { router.go(-1); };
 
         </VCol>
         <VCol cols="8" md="8">
-            <component :is="currentComponent"></component>
+            <component :is="currentComponent" :key="tab"></component>
         </VCol>
     </VRow>
 </div>

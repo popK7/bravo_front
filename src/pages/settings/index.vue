@@ -242,114 +242,239 @@ const Expense_paies = [
         ],
     },
 ];
+
+const Materials_badges = [
+{
+        id: 7,
+        name: "Materiels",
+        description: '',
+        icon: 'tabler-building-store',
+        modules: [{
+            id: 71,
+            name: 'Catégories',
+            to: 'settings/products/categories',
+            icon: 'tabler-lock-open',
+        },
+        {
+            id: 71,
+            name: 'Materiels',
+            to: 'settings/products',
+            icon: 'tabler-lock-open',
+        }],
+    },
+    {
+        id: 8,
+        name: 'Badges',
+        description: '',
+        icon: 'tabler-badges',
+        modules: [{
+                id: 51,
+                name: 'Catégories',
+                to: 'settings/badges/categories',
+                icon: 'tabler-lock-open',
+            },
+            {
+                id: 51,
+                name: 'Badges',
+                to: 'settings/badges',
+                icon: 'tabler-lock-open',
+            },
+        ],
+    },
+];
+
+const Notifications = [
+    {
+        id: 9,
+        name: 'Notifications',
+        description: '',
+        icon: 'tabler-template',
+        modules: [
+            {
+                id: 91,
+                name: 'Registration',
+                to: 'settings/notifications/registrations',
+                icon: 'tabler-lock-open',
+            },
+            {
+                id: 92,
+                name: 'Contrat',
+                to: 'settings/contract',
+                icon: 'tabler-lock-open',
+            },
+            {
+                id: 93,
+                name: 'Certificat',
+                to: 'settings/notifications/registrations',
+                icon: 'tabler-lock-open',
+            },
+            {
+                id: 94,
+                name: 'Récu solde',
+                to: 'settings/recu',
+                icon: 'tabler-lock-open',
+            },
+            {
+                id: 94,
+                name: 'Dénonciation solde',
+                to: 'settings/denonciation',
+                icon: 'tabler-lock-open',
+            },
+            
+        ],
+    },
+];
+
 import SettingCard from '../components/SettingCard.vue'
 </script>
 
 <template>
-<VRow>
-    <VCol cols="12" md="12">
-        <VCard title="Settings">
-            <template #title>
-                <h3>Configurations</h3>
-            </template>
-            <VRow>
-                <!-- <SettingCard :modules="items" />   -->
-                <VCardText>
-                    <VRow>
-                        <VCol cols="12" md="12" class="ms-3">
-                          <VDivider />
-                            <h3 class="mb-5 mt-3">GENERAL</h3>
-                            <VDivider class="mb-5 mt-3"/>
-                        </VCol>
-                        <!-- Generals -->
-                        <VCol cols="12" md="12">
-                            <VRow>
-                                <VCol cols="6" md="6" v-for="(item, index) of generals" :key="index">
-                                    <div class="d-flex">
-                                        <VIcon color="primary" :icon="item.icon" size="50" />
-                                        <div class="ml-3">
-                                            <h3 class="ms-3">{{item.name}}</h3>
-                                            <div class="ms-3">
-                                                <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+  <div class="container-fluid">
+    <VRow>
+        <VCol cols="10" md="10" offset-md="1">
+            <VCard title="Settings">
+                <template #title>
+                    <h3>Configurations</h3>
+                </template>
+                <VRow>
+                    <!-- <SettingCard :modules="items" />   -->
+                    <VCardText>
+                        <VRow>
+                            <VCol cols="12" md="12" class="ms-3">
+                                <h3 class="mb-5 mt-3">GENERAL</h3>
+                                <VDivider class="mb-5 mt-3"/>
+                            </VCol>
+                            <!-- Generals -->
+                            <VCol cols="12" md="12">
+                                <VRow>
+                                    <VCol cols="6" md="6" v-for="(item, index) of generals" :key="index">
+                                        <div class="d-flex">
+                                            <VIcon color="primary" :icon="item.icon" size="50" />
+                                            <div class="ml-3">
+                                                <h3 class="ms-3">{{item.name}}</h3>
+                                                <div class="ms-3">
+                                                    <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+                                                </div>
                                             </div>
+  
                                         </div>
-
-                                    </div>
-                                </VCol>
-                            </VRow>
-                        </VCol>
-                        <VCol cols="12" md="12" class="ms-3">
-                            <h3 class="mb-5 mt-3">ENTREPRISE</h3>
-                            <VDivider />
-                        </VCol>
-                        <!-- Account -->
-                        <VCol cols="12" md="12">
-                            <VRow>
-                                <VCol cols="6" md="6" v-for="(item, index) of account" :key="index">
-                                    <div class="d-flex">
-                                        <VIcon color="primary" :icon="item.icon" size="50" />
-                                        <div class="ml-3">
-                                            <h3 class="ms-3">{{item.name}}</h3>
-                                            <div class="ms-3">
-                                                <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                            <VCol cols="12" md="12" class="ms-3">
+                                <h3 class="mb-5 mt-3">ENTREPRISE</h3>
+                                <VDivider />
+                            </VCol>
+                            <!-- Account -->
+                            <VCol cols="12" md="12">
+                                <VRow>
+                                    <VCol cols="6" md="6" v-for="(item, index) of account" :key="index">
+                                        <div class="d-flex">
+                                            <VIcon color="primary" :icon="item.icon" size="50" />
+                                            <div class="ml-3">
+                                                <h3 class="ms-3">{{item.name}}</h3>
+                                                <div class="ms-3">
+                                                    <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+                                                </div>
                                             </div>
+  
                                         </div>
-
-                                    </div>
-                                </VCol>
-                            </VRow>
-                        </VCol>
-                        <!-- presence-abseence -->
-                        <VCol cols="12" md="12" class="ms-3">
-                            <h3 class="mb-5 mt-3">PRESENCE - ABSENCE</h3>
-                            <VDivider />
-                        </VCol>
-                        <VCol cols="12" md="12">
-                            <VRow>
-                                <VCol cols="6" md="6" v-for="(item, index) of absences_presences" :key="index">
-                                    <div class="d-flex">
-                                        <VIcon color="primary" :icon="item.icon" size="50" />
-                                        <div class="ml-3">
-                                            <h3 class="ms-3">{{item.name}}</h3>
-                                            <div class="ms-3">
-                                                <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                            <!-- presence-abseence -->
+                            <VCol cols="12" md="12" class="ms-3">
+                                <h3 class="mb-5 mt-3">PRESENCE - ABSENCE</h3>
+                                <VDivider />
+                            </VCol>
+                            <VCol cols="12" md="12">
+                                <VRow>
+                                    <VCol cols="6" md="6" v-for="(item, index) of absences_presences" :key="index">
+                                        <div class="d-flex">
+                                            <VIcon color="primary" :icon="item.icon" size="50" />
+                                            <div class="ml-3">
+                                                <h3 class="ms-3">{{item.name}}</h3>
+                                                <div class="ms-3">
+                                                    <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+                                                </div>
                                             </div>
+  
                                         </div>
-
-                                    </div>
-                                </VCol>
-                            </VRow>
-                        </VCol>
-                        <!-- Pay-expence note -->
-                        <VCol cols="12" md="12" class="ms-3">
-                            <h3 class="mb-5 mt-3">PAIES - NOTE DE FRAIS</h3>
-                            <VDivider />
-                        </VCol>
-                        <!-- Account -->
-                        <VCol cols="12" md="12" class="mb-15">
-                            <VRow>
-                                <VCol cols="6" md="6" v-for="(item, index) of Expense_paies" :key="index">
-                                    <div class="d-flex">
-                                        <VIcon color="primary" :icon="item.icon" size="50" />
-                                        <div class="ml-3">
-                                            <h3 class="ms-3">{{item.name}}</h3>
-                                            <div class="ms-3">
-                                                <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                            <!-- Pay-expence note -->
+                            <VCol cols="12" md="12" class="ms-3">
+                                <h3 class="mb-5 mt-3">PAIES - NOTE DE FRAIS</h3>
+                                <VDivider />
+                            </VCol>
+                            <!-- Account -->
+                            <VCol cols="12" md="12" class="mb-5">
+                                <VRow>
+                                    <VCol cols="6" md="6" v-for="(item, index) of Expense_paies" :key="index">
+                                        <div class="d-flex">
+                                            <VIcon color="primary" :icon="item.icon" size="50" />
+                                            <div class="ml-3">
+                                                <h3 class="ms-3">{{item.name}}</h3>
+                                                <div class="ms-3">
+                                                    <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+                                                </div>
                                             </div>
+  
                                         </div>
-
-                                    </div>
-                                </VCol>
-                            </VRow>
-                        </VCol>
-                    </VRow>
-                </VCardText>
-            </VRow>
-        </VCard>
-    </VCol>
-    <VCol v-if="$can('read', 'Admin')" cols="12" md="6">
-    </VCol>
-</VRow>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                            <!-- Pay-expence note -->
+                            <VCol cols="12" md="12" class="ms-3">
+                                <h3 class="mb-5">MATERIELS - BADGES</h3>
+                                <VDivider />
+                            </VCol>
+                            <!-- Account -->
+                            <VCol cols="12" md="12" class="mb-5">
+                                <VRow>
+                                    <VCol cols="6" md="6" v-for="(item, index) of Materials_badges" :key="index">
+                                        <div class="d-flex">
+                                            <VIcon color="primary" :icon="item.icon" size="50" />
+                                            <div class="ml-3">
+                                                <h3 class="ms-3">{{item.name}}</h3>
+                                                <div class="ms-3">
+                                                    <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+                                                </div>
+                                            </div>
+  
+                                        </div>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                            <VCol cols="12" md="12" class="ms-3">
+                                <h3 class="mb-5">NOTIFICATIONS - TEMPLATE</h3>
+                                <VDivider />
+                            </VCol>
+                            <!-- Account -->
+                            <VCol cols="12" md="12" class="mb-15">
+                                <VRow>
+                                    <VCol cols="6" md="6" v-for="(item, index) of Notifications" :key="index">
+                                        <div class="d-flex">
+                                            <VIcon color="primary" :icon="item.icon" size="50" />
+                                            <div class="ml-3">
+                                                <h3 class="ms-3">{{item.name}}</h3>
+                                                <div class="ms-3">
+                                                    <a :href="modul.to" class="mr-2" v-for="(modul, index) of item.modules" :key="index">{{modul.name}}</a>
+                                                </div>
+                                            </div>
+  
+                                        </div>
+                                    </VCol>
+                                </VRow>
+                            </VCol>
+                        </VRow>
+                    </VCardText>
+                </VRow>
+            </VCard>
+        </VCol>
+    </VRow>
+  </div>
 </template>
 
 <route lang="yaml">

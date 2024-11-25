@@ -34,7 +34,7 @@ const category = ref(props.form ?.category ?? null)
 const from = ref(props.form ?.from ?? '')
 const to = ref(props.form ?.to ?? '')
 const note = ref(props.form ?.note ?? '')
-const isAssign = ref(false)
+const isAssign = ref(true)
 
 const description = ref(props.form ?.description ?? '');
 const handleSubmit = ref(false)
@@ -117,10 +117,10 @@ const onSubmit = function () {
         <!-- 👉 Product name -->
         <VCol cols="12">
           <AppAutocomplete
-            label="Categorie"
+            label="Badges"
             :items="categories"
             v-model="category"
-            placeholder="Categorie du badge"
+            placeholder="Choisir un badge"
             :rules="[requiredValidator]"
           />
         </VCol>
@@ -139,10 +139,6 @@ const onSubmit = function () {
               placeholder="Date fin"
               :config="{ enableTime: true, dateFormat: 'Y-m-d H:i' }"
             />
-        </VCol>
-         <!-- Assign employees -->
-         <VCol cols="12">
-            <VSwitch v-model="isAssign" label="Assigner ?" />
         </VCol>
         <VCol cols="12" v-if="isAssign">
         <AppAutocomplete v-model="friends" chips closable-chips multiple :items="people" item-title="name" item-value="name" placeholder="Choisir employé(s)" label="Employé(s)">

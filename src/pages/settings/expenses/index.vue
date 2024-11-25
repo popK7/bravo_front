@@ -76,7 +76,7 @@ const resources = ref(regimeList);
 
 // show detail list
 const showDetail = function(item) {
-  let uri = 'settings-expenses-pages-notes';
+  let uri = 'settings-expenses-pages';
   router.push({name: uri,  query: {id:item.id, name:item.name, description: item.description}})
 };
 

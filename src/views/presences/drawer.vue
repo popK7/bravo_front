@@ -3,6 +3,8 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import advantageForm from "./forms/regime.vue"
 import sheetForm from "./forms/sheet.vue"
 import supHourForm from "./forms/supHour.vue"
+import regimes from "./forms/regime.vue"
+
 
 import { useRoute, useRouter } from 'vue-router';  
 
@@ -22,6 +24,7 @@ const props = defineProps({
 })
 
 const titles = {
+  regimes: "Regimes présences",
   "sheet": "Feuille de temps",
   "edit_sheet": "Modifier la feuille",
   "sup_hours": "Heures supplémentaires",
@@ -32,7 +35,8 @@ const components = {
   "sheet": sheetForm,
   "edit_sheet": sheetForm,
   "sup_hours": supHourForm,
-  "edit_sup_hours":supHourForm
+  "edit_sup_hours":supHourForm,
+  regimes: regimes
 }
 
 const title = ref(titles[props.tab]);

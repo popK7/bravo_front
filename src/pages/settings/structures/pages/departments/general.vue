@@ -7,7 +7,7 @@ import departementForm from "@/views/account/forms/DepartmentForm.vue"
         <VCol cols="12" md="12">
           <VCard>
             <template #title>
-              <h3>Général</h3>
+              <h4>Général</h4>
             </template>
             <VCardText>
               <departement-form />

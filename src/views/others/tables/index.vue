@@ -3,6 +3,10 @@ import { VDataTableServer } from 'vuetify/labs/VDataTable'
 import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
 import { avatarText } from '@core/utils/formatters'
+import employees from '@/pages/components/bravo/usersMultiSelect.vue'
+import documentStatus from '@/pages/components/bravo/statusMultiSelect.vue'
+
+const emit = defineEmits(['onAction']);
 
 const invoiceListStore = useInvoiceStore()
 const searchQuery = ref('')
@@ -158,7 +162,7 @@ watchEffect(() => {
   const [start, end] = dateRange.value ? dateRange.value.split('to') : ''
 
   fetchInvoices(searchQuery.value, selectedStatus.value, start, end, options.value)
-})
+});
 </script>
 
 <template>
@@ -166,10 +170,13 @@ watchEffect(() => {
     v-if="invoices"
     id="invoice-list"
   >
+    
     <VCardText class="d-flex align-center flex-wrap gap-3">
 
       <VSpacer />
-
+      <div class="mr-3">
+        <h4>Filtres</h4>
+      </div>
       <div class="d-flex align-end flex-wrap gap-3">
         <!-- 👉 Search  -->
         <div class="invoice-list-search">
@@ -180,16 +187,13 @@ watchEffect(() => {
             class="me-3"
           />
         </div>
-        <div class="invoice-list-status">
-          <AppSelect
-            v-model="selectedStatus"
-            density="compact"
-            placeholder="Choisir un status"
-            clearable
-            clear-icon="tabler-x"
-            :items="['Downloaded', 'Draft', 'Sent', 'Paid', 'Partial Payment', 'Past Due']"
-            style="inline-size: 12rem;"
-          />
+        <!-- 👉 Status  -->
+        <div class="document-list-status">
+          <document-status />
+        </div>
+        <!-- 👉 Employees  -->
+        <div class="employees-list">
+          <employees />
         </div>
       </div>
     </VCardText>
@@ -268,15 +272,9 @@ watchEffect(() => {
           <VIcon icon="tabler-trash" />
         </IconBtn>
 
-        <IconBtn :to="{ name: 'apps-invoice-preview-id', params: { id: item.raw.id } }">
-          <VIcon icon="tabler-eye" />
+        <IconBtn @click="emit('onAction', item.raw, 'edit')">
+          <VIcon icon="tabler-edit" />
         </IconBtn>
-
-        <MoreBtn
-          :menu-list="computedMoreList(item.raw.id)"
-          item-props
-          color="undefined"
-        />
       </template>
 
       <template #bottom>

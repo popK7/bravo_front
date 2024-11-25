@@ -26,11 +26,11 @@ const handleClick = function (nav) {
       v-if="item.items?.length == 0"
       :prepend-icon="item.icon"
       :title="item.title"
-      :value="item.value"
+      :value="item.tab"
       @click="handleClick(item)"
     />
 
-    <VListGroup v-else :value="item.value">
+    <VListGroup v-else :value="item.tab">
       <template #activator="{ props }">
         <VListItem
           v-bind="props"
@@ -41,7 +41,7 @@ const handleClick = function (nav) {
       <VListItem
           v-for="(nav, i) in item.items"
           :key="i"
-          :value="nav.value"
+          :value="nav.tab"
           :title="nav.title"
           :prepend-icon="nav.icon"
           @click="handleClick(nav)"

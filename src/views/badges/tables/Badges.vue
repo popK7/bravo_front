@@ -3,6 +3,10 @@ import { VDataTableServer } from 'vuetify/labs/VDataTable'
 import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
 import { avatarText } from '@core/utils/formatters'
+import usersMultiSelect from "@/pages/components/bravo/usersMultiSelect.vue"
+import statusMultiSelect from "@/pages/components/bravo/statusMultiSelect.vue"
+
+const emit = defineEmits(['onAction']);
 
 const invoiceListStore = useInvoiceStore()
 const searchQuery = ref('')
@@ -176,7 +180,7 @@ watchEffect(() => {
   const [start, end] = dateRange.value ? dateRange.value.split('to') : ''
 
   fetchInvoices(searchQuery.value, selectedStatus.value, start, end, options.value)
-})
+});
 </script>
 
 <template>
@@ -188,6 +192,9 @@ watchEffect(() => {
 
       <VSpacer />
 
+      <div class="mr-3">
+        <h4>Filtres</h4>
+      </div>
       <div class="d-flex align-end flex-wrap gap-3">
         <!-- 👉 Search  -->
         <div class="invoice-list-search">
@@ -198,16 +205,11 @@ watchEffect(() => {
             class="me-3"
           />
         </div>
-        <div class="invoice-list-status">
-          <AppSelect
-            v-model="selectedStatus"
-            density="compact"
-            placeholder="Choisir un status"
-            clearable
-            clear-icon="tabler-x"
-            :items="['Downloaded', 'Draft', 'Sent', 'Paid', 'Partial Payment', 'Past Due']"
-            style="inline-size: 12rem;"
-          />
+        <div class="material-list-status">
+          <status-multi-select />
+        </div>
+        <div class="users-list-status">
+          <users-multi-select />
         </div>
       </div>
     </VCardText>
@@ -261,13 +263,14 @@ watchEffect(() => {
 
       <!-- from -->
       <template #item.from="{ item }">
-        {{ item.raw.issuedDate }}
-        
+        <VIcon icon="tabler-clock-hour-1"/>
+        <small> {{ item.raw.issuedDate }}</small>
       </template>
 
       <!-- to -->
       <template #item.to="{ item }">
-        {{ item.raw.issuedDate }}
+        <VIcon icon="tabler-clock-hour-5"/>
+        <small> {{ item.raw.issuedDate }}</small>
       </template>
 
       <!-- category -->
@@ -296,15 +299,9 @@ watchEffect(() => {
           <VIcon icon="tabler-trash" />
         </IconBtn>
 
-        <IconBtn :to="{ name: 'apps-invoice-preview-id', params: { id: item.raw.id } }">
-          <VIcon icon="tabler-eye" />
+        <IconBtn @click="emit('onAction', item.raw, 'edit')">
+          <VIcon icon="tabler-edit" />
         </IconBtn>
-
-        <MoreBtn
-          :menu-list="computedMoreList(item.raw.id)"
-          item-props
-          color="undefined"
-        />
       </template>
 
       <template #bottom>

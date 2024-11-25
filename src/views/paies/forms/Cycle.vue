@@ -30,6 +30,7 @@ const description = ref(props.form?.description ?? null);
 const refForm = ref()
 const handleSubmit = ref(false);
 
+const isAssign = ref(false)
 const emit = defineEmits(['save']);
 
 const submit = function () {
@@ -135,11 +136,18 @@ const people = [
         <!-- 👉 frequency -->
         <VCol cols="12" md="12">
           <AppDateTimePicker v-model="day_of_pay" placeholder="Jour de paie" label="Jour de paie"/>
-            
+        </VCol>
+
+         <!-- 👉 assign? -->
+         <VCol cols="12" md="12">
+          <VSwitch
+            v-model="isAssign"
+            label="Assigner?"
+          />
         </VCol>
 
         <!-- 👉 Employee(s) -->
-        <VCol cols="12">
+        <VCol cols="12" v-if="isAssign">
           <AppAutocomplete
             v-model="friends"
             chips

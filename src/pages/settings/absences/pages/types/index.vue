@@ -1,23 +1,29 @@
 <script setup>
 import pageContentNav from '@/pages/components/page-content-nav.vue'
 import general from './general.vue'
-import deleteForm from './delete.vue'
-import { useRouter } from 'vue-router'
+import delete_ from './delete.vue'
+import solde from './solde.vue'
+
+import { useRouter } from 'vue-router' 
 
 const route = useRoute();
 const router = useRouter();
 const currentComponent = ref(general);
-const handleClick = function(component, value) {
-  const url = `sites/${value}`;
-  currentComponent.value = component;
+const tab = ref(null);
+
+const components = {
+  general: general,
+  delete: delete_,
+  solde: solde
+  
+}
+const handleClick = function(tab) {
+  currentComponent.value = components[tab];
 }
 const navigations = [
-    { id: 1, title: 'Général', value: 'general', component: general, icon: 'tabler-users', items: [] },
-    { id: 2, title: 'Supprimer', value: 'supprimer', component: deleteForm, icon: 'tabler-trash', items: [] }
+    { id: 1, title: 'Général', tab: 'general', icon: 'tabler-users', items: [] },
+    { id: 2, title: 'Supprimer', tab: 'delete', icon: 'tabler-trash', items: [] }
 ];
-const back = function() {
-  router.go(-1)
-};
 </script>
 <template>
 <div>
@@ -27,7 +33,7 @@ const back = function() {
                 <template #title>
                     <div class="d-flex justify-space-between">
                       <div class="d-flex justify-space-between">
-                        <button class="mr-2" @click="back">
+                        <button class="mr-2" @click="router.go(-1)">
                             <VIcon size="30" icon="tabler-square-arrow-left" />
                         </button>
                         <h4>{{ route.query.name }}</h4>
@@ -40,7 +46,7 @@ const back = function() {
         </VCol>
     </VRow>
     <VRow>
-        <VCol cols="4" md="4">
+        <VCol cols="3" md="3">
             <VCard>
                 <VCardText>
                     <pageContentNav @click="handleClick" :data="navigations" />
@@ -48,8 +54,8 @@ const back = function() {
             </VCard>
 
         </VCol>
-        <VCol cols="8" md="8">
-          <component :is="currentComponent"></component>
+        <VCol cols="9" md="9">
+          <component :is="currentComponent" :key="tab"/>
         </VCol>
     </VRow>
 </div>

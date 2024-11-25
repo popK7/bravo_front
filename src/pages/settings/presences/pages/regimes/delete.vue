@@ -21,7 +21,6 @@ const removeCotisation = function() {
     alertText.value = `La note de frais ${expenseNote} a bien été supprimé`;
     isSpinnerVisible.value = false;
     isAlertVisible.value = true;
-    // router.push('/settings/cotisations/employees')
   }, 2000);
 };
 </script>
@@ -30,7 +29,7 @@ const removeCotisation = function() {
   <div>
     <VCard>
     <template #title>
-        <h3 class="mb-2">Suppresion</h3>
+        <h4 class="mb-2">Suppresion</h4>
     </template>
     <VCardText>
         <VForm @submit.prevent="() => {}">

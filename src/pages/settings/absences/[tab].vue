@@ -85,8 +85,8 @@ const typeList = reactive([
 ]);
 
 const navigations = [
-    { id: 1, title: 'Régimes absences', value: 'regimes', component: 'regimes', icon: 'tabler-users', items: [] },
-    { id: 2, title: 'Types absences', value: 'types', component: 'types', icon: 'tabler-users', items: [] }
+    { id: 1, title: 'Régimes absences', tab: 'regimes', icon: 'tabler-users', items: [] },
+    { id: 2, title: 'Types absences', tab: 'types', icon: 'tabler-users', items: [] }
 ];
 
 const status = reactive([{ title: 'Active', value: 'active' }, { title: 'Inactive', value: 'inactive' }, { title: 'Pending', value: 'pending' }]);

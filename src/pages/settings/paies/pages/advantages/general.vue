@@ -1,5 +1,5 @@
 <script setup>
-import advantageForm from "@/views/paies/forms/advantage.vue"
+import advantageForm from "@/views/paies/forms/add.vue"
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();

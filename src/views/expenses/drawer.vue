@@ -21,12 +21,14 @@ const props = defineProps({
 
 const titles = {
   setting: "Ajouter une note de frais",
-  add_demand: "Déposer une note",
+  expence_demand: "Déposer une note",
+  edit_expense_demand: "Modifier la demande"
 }
 
 const components = {
   setting: noteSettingForm,
-  add_demand: demandForm,
+  expence_demand: demandForm,
+  edit_expense_demand: demandForm
 
 }
 

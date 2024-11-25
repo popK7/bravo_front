@@ -18,6 +18,8 @@ const props = defineProps({
 const isFormValid = ref(false)
 const refForm = ref()
 const name = ref(props.form ?.name ?? '')
+const cumulation = ref(props.form ?.cumulation ?? null)
+
 const description = ref(props.form ?.description ?? '');
 const handleSubmit = ref(false)
 
@@ -56,6 +58,19 @@ const addSliceRate = function () {
         <!-- 👉 name -->
         <VCol cols="12">
             <AppTextField v-model="name" :rules="[requiredValidator]" label="Nom" placeholder="Nom du site" />
+        </VCol>
+         <!-- 👉 accumulationation -->
+         <VCol cols="12">
+          <AppTextField
+            v-model="cumulation"
+            label="cumulatione"
+            suffix="ans"
+            type="number"
+            placeholder="2"
+          />
+          <div class="text-danger mt-1">
+            <small>Période de cumulatione des absences(N-1, N, N+1)</small>
+          </div>
         </VCol>
         <!-- 👉 Description -->
         <VCol cols="12">

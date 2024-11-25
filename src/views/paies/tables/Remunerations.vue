@@ -3,6 +3,10 @@ import { VDataTableServer } from 'vuetify/labs/VDataTable'
 import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
 import { avatarText } from '@core/utils/formatters'
+import employees from '@/pages/components/bravo/usersMultiSelect.vue'
+import remunerationStatus from '@/pages/components/bravo/statusMultiSelect.vue'
+
+
 
 const invoiceListStore = useInvoiceStore()
 const searchQuery = ref('')
@@ -12,7 +16,7 @@ const totalInvoices = ref(0)
 const invoices = ref([])
 const selectedRows = ref([])
 
-const emit = defineEmits(['onShowRow']);
+const emit = defineEmits(['onAction']);
 
 
 const options = ref({
@@ -32,33 +36,38 @@ const headers = [
   {
     title: '#ID',
     key: 'id',
+    align: 'center'
   },
   {
     title: 'Employé',
     key: 'client',
-    class: 'text-center'
   },
   {
-    title: 'Rémunération',
+    title: 'Catégorie',
     key: 'balance',
+    align: 'center'
   },
   {
     title: 'Total',
     key: 'total',
+    align: 'center'
   },
   {
     title: 'Date',
     key: 'date',
+    align: 'center'
   },
   {
     title: 'Status',
     key: 'trending',
-    sortable: false,
+    align: 'center'
   },
   {
     title: 'Actions',
     key: 'actions',
     sortable: false,
+    align: 'center'
+
   },
 ]
 
@@ -119,21 +128,8 @@ const resolveInvoiceStatusVariantAndIcon = status => {
   }
 }
 
-const editRemuneration = function(id) {
-
-  const data = {
-    category: 1,
-    amount: 450,
-    currency: 1,
-    frequency: 3,
-    from: '2024-12-12',
-    to: '2025-12-12',
-    description:'Pour avoir fait profiter les seniors de son experience',
-    employees: [
-      {name:'Sandra Adams', code: 1},
-    ]
-  }
-  emit('onShowRow', data);
+const editRemuneration = function(data) {
+  emit('onShowRow', data, 'edit');
 }
 
 const computedMoreList = computed(() => {
@@ -173,7 +169,7 @@ watchEffect(() => {
   const [start, end] = dateRange.value ? dateRange.value.split('to') : ''
 
   fetchInvoices(searchQuery.value, selectedStatus.value, start, end, options.value)
-})
+});
 </script>
 
 <template>
@@ -184,7 +180,9 @@ watchEffect(() => {
     <VCardText class="d-flex align-center flex-wrap gap-3">
 
       <VSpacer />
-
+      <div class="mr-3">
+        <h4>Filtres</h4>
+      </div>
       <div class="d-flex align-end flex-wrap gap-3">
         <!-- 👉 Search  -->
         <div class="invoice-list-search">
@@ -205,6 +203,10 @@ watchEffect(() => {
             style="inline-size: 12rem;"
             placeholder="Choisir un status"
           />
+        </div>
+
+        <div class="remunaration-list-status">
+          <employees />
         </div>
       </div>
     </VCardText>
@@ -282,17 +284,16 @@ watchEffect(() => {
 
       <!-- Balance -->
       <template #item.balance="{ item }">
-          <span class="text-center">Salaire</span>
+          <VChip
+          label>
+          Salaire
+          </VChip>
       </template>
 
       <!-- Actions -->
       <template #item.actions="{ item }">
         <IconBtn @click="deleteInvoice(item.raw.id)">
           <VIcon icon="tabler-trash" />
-        </IconBtn>
-
-        <IconBtn :to="{ name: 'apps-invoice-preview-id', params: { id: item.raw.id } }">
-          <VIcon icon="tabler-eye" />
         </IconBtn>
 
         <IconBtn @click="editRemuneration(item.raw.id)">

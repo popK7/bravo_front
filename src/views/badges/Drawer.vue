@@ -21,14 +21,17 @@ const emit = defineEmits([
 
 const titles = {
   add_demand: "Deposer une demande",
-  add_badge: "Ajouter un badge",
+  add_badge: "Assigner un badge",
+  assign_badge: "Assigner un badge",
+  edit_assign_badge: "Modifier l'assignement",
 
 }
 
 const components = {
   add_demand: demandForm,
   add_badge: badgeForm,
-
+  assign_badge: badgeForm,
+  edit_assign_badge: badgeForm,
 }
 
 const title = ref(titles[props.tab]);

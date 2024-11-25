@@ -4,7 +4,8 @@ import { paginationMeta } from '@/@fake-db/utils'
 import { useInvoiceStore } from '@/views/apps/invoice/useInvoiceStore'
 import { avatarText } from '@core/utils/formatters'
 import { capitalizeFirstLetter } from '@/helpers/utils'
-
+import employees from '@/pages/components/bravo/usersMultiSelect.vue'
+import presenceStatus from '@/pages/components/bravo/statusMultiSelect.vue'
 
 const invoiceListStore = useInvoiceStore() 
 const searchQuery = ref('')
@@ -159,19 +160,33 @@ const week = "Du 01-12-2024 au 07-12-2024";
     <VCardText class="d-flex align-center flex-wrap gap-3">
 
       <VSpacer />
-
+      <div class="mr-3">
+        <h4>Filtres</h4>
+      </div>
       <div class="d-flex align-end flex-wrap gap-3 my-3">
-        <!-- 👉 Search  -->
-        <VIcon
-        icon="tabler-square-arrow-left"
-        class="cursor-pointer"
-        @click="getWeek('left')"
-        ></VIcon>
-        <b>{{week}}</b>
-        <VIcon
-        icon="tabler-square-arrow-right"
-        @click="getWeek('right')"
-        ></VIcon>
+        <!-- 👉 status  -->
+        <div class="stat-list">
+         <presence-status />
+        </div>
+        <!-- 👉 employees  -->
+        <div class="employees-list">
+         <employees />
+        </div>
+        <!-- 👉 weeks  -->
+        <div class="weeks d-none">
+          <VIcon
+            icon="tabler-square-arrow-left"
+            class="cursor-pointer"
+            @click="getWeek('left')"
+            >
+          </VIcon>
+          <b>{{week}}</b>
+          <VIcon
+          icon="tabler-square-arrow-right"
+          @click="getWeek('right')"
+          >
+          </VIcon>
+        </div>
       </div>
     </VCardText>
 

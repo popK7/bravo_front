@@ -6,15 +6,23 @@ import { reactive } from "vue";
 
 const isDrawerVisible = ref(false)
 let form = reactive();
-const key = ref(null);
+const tab = ref(null);
 
-const showRow = function(data) {
+const showRow = function(data, action) {
   form = data; 
-  key.value= Math.random();
-  isDrawerVisible.value = true;
+  switch (action) {
+    case 'edit':
+      action = 'edit_remuneration'
+      break;
+  
+    default:
+      break;
+  }
+  showDrawer(action);
 }
 
-const showDrawer = function() {
+const showDrawer = function(action) {
+  tab.value= action;
   isDrawerVisible.value = true;
 };
 
@@ -24,13 +32,13 @@ const showDrawer = function() {
 <div>
     <VCard class="mb-5">
         <template #title>
-            <add-resource title="Les Rémunerations" @on-click="showDrawer"/>
+            <add-resource title="Les Rémunerations" @on-click="showDrawer('advantage')"/>
         </template>
     </VCard>
     <!-- timesheet list -->
     <list @on-show-row="showRow"/>
     <!-- drawer -->
-    <drawer tab="advantage" v-model:isDrawerOpen="isDrawerVisible" :form="form" :key="key"/>
+    <drawer :tab="tab" v-model:isDrawerOpen="isDrawerVisible" :form="form" :key="tab"/>
 </div>
 </template>
 

@@ -21,20 +21,29 @@ const resource = reactive({
     team: []
 
 });
-const handleClick = function (component, value) {
-    const url = `sites/${value}`;
-    currentComponent.value = component;
-}
 const props = defineProps({
     site_name: {
         type: String,
         default: '***'
     }
 })
+const tab = ref(null);
+
+const components = {
+  general: general,
+  assign: assign,
+  delete: deleteSite,
+
+}
+
+const handleClick = function (tab) {
+    currentComponent.value =components[tab];
+}
+
 const navigations = [
-    { id: 1, title: 'Général', value: 'general', component: general, icon: 'tabler-users', items: [] },
-    { id: 2, title: 'Assigner', value: 'assign', component: assign, icon: 'tabler-users', items: [] },
-    { id: 3, title: 'Supprimer', value: 'supprimer', component: deleteSite, icon: 'tabler-trash', items: [] }
+    { id: 1, title: 'Général', tab: 'general', icon: 'tabler-users', items: [] },
+    { id: 2, title: 'Assigner', tab: 'assign', icon: 'tabler-users', items: [] },
+    { id: 3, title: 'Supprimer', tab: 'delete', icon: 'tabler-trash', items: [] }
 ];
 const back = function () {
     router.go(-1);
@@ -61,7 +70,7 @@ const back = function () {
         </VCol>
     </VRow>
     <VRow>
-        <VCol cols="4" md="4">
+        <VCol cols="3" md="3">
             <VCard>
                 <VCardText>
                     <pageContentNav @click="handleClick" :data="navigations" />
@@ -69,8 +78,8 @@ const back = function () {
             </VCard>
 
         </VCol>
-        <VCol cols="8" md="8">
-            <component :is="currentComponent" :form="resource"></component>
+        <VCol cols="9" md="9">
+            <component :is="currentComponent" :form="resource" :key="tab"></component>
         </VCol>
     </VRow>
 </div>
